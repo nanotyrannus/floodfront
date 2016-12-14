@@ -1,19 +1,21 @@
 <div class="login-component-container">
     <div class="container">
         <div class="row">
+            <div class="col-md-12">
+                <span class="login-title">Flood Front</span>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="login-container">
                     <div class="input-group">
                         <span class="input-group-addon">
                     <span class="glyphicon glyphicon-envelope"></span>
                         </span>
-                        <input type="text" (keypress.enter)="test()" class="form-control" placeholder="Email" [(ngModel)]="email">
+                        <input type="text" (keyup.enter)="login()" class="form-control" placeholder="Email" [(ngModel)]="email">
                     </div>
                 </div>
                 <button class="btn btn-default" [disabled]="buttonState()" (click)="login()">ENTER</button>
-            </div>
-            <div class="col-md-3 col-xs-0">
-                <span>second column</span>
             </div>
         </div>
     </div>
