@@ -45,7 +45,7 @@ exports.userRouter
     .get("/event", function* () {
     //TODO return events
     let result = yield database_1.query(`
-            SELECT id, name, description, ST_AsGeoJSON( bbox )
+            SELECT id, name, description, ST_AsGeoJSON( bbox ) AS bounds
             FROM event
         `);
     console.log(result.rows);
@@ -66,9 +66,9 @@ exports.userRouter
     let params = this.params;
     this.body = params.id;
 })
-    .post("/marker/:eventId", function* () {
-    console.log(this.request.files);
-    this.body = "blah";
+    .post("/marker/:eventId", body(), function* () {
+    console.log(this.request.fields);
+    this.body = `Marker recieved ${null}`;
 })
     .post("/marker/:markerId/update", function* () {
 })

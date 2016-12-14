@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { Router } from '@angular/router'
 import { EventService } from './event.service'
 import { RestService } from '../shared/rest.service'
 import { EnvironmentService } from '../shared/environment.service'
@@ -20,7 +21,8 @@ export class EventComponent {
     constructor(
         private env: EnvironmentService,
         private rest: RestService,
-        private eventService: EventService) {
+        private eventService: EventService,
+        private router: Router) {
 
     }
 
@@ -44,6 +46,14 @@ export class EventComponent {
           console.error(error)
         }
       )
+    }
+
+    enterEvent(eventId: number, eventName: string, bounds: any) {
+      console.log(`enterEvent: ${eventId}: ${eventName}`)
+        this.eventService.eventId = eventId
+        this.eventService.eventName = eventName
+        this.eventService.bounds = JSON.parse(bounds)
+        this.router.navigate(['/map'])
     }
 
     createEvent() {

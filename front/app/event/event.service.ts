@@ -5,7 +5,9 @@ import { RestService } from "../shared/rest.service"
 @Injectable()
 export class EventService {
     private _eventId: number
+    private _eventName: string
     private events: any
+    public bounds: any
 
     constructor(private rest: RestService) {}
 
@@ -20,6 +22,16 @@ export class EventService {
     get eventId (): number {
         return this._eventId
     }
+
+    set eventName (value: string) {
+        this._eventName = value
+    }
+
+    get eventName ():string {
+        return this._eventName
+    }
+
+
 
     createEvent(name: string, desc: string, bounds: Bounds) {
         console.log(`EventService#createEvent() called`)

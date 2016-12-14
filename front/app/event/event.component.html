@@ -1,16 +1,20 @@
 <div>
-    <a routerLink="/map">MAP</a>
-    event component
-    <div class="event-list-container">
-        <ul>
-            <li *ngFor="let event of events">
-                {{ event.name }}
-            </li>
-        </ul>
+    <a routerLink="/map">MAP</a> event component
+    <div class="event-list-container container">
+        <div *ngFor="let event of events" class="thumbnail col-xs-12 col-md-6 col-lg-4">
+            <img src="http://placehold.it/350x150">
+            <div class="caption">
+                <h3>{{ event.name }}</h3>
+                <p>{{ event.description }}</p>
+                <p>
+                    <button class="btn btn-primary" (click)="enterEvent(event.id, event.name, event.bounds)">ENTER</button>
+                </p>
+            </div>
+        </div>
     </div>
     <form enctype="multipart/form-data" action="http://localhost:8080/upload" method="POST">
         <input type="file" name="picture" accept="image/*">
-    <input type="submit">
+        <input type="submit">
     </form>
     <form class="form-inline">
         <div class="form group"><input class="form-control" type="text" name="name" placeholder="Event name" [(ngModel)]="eventName"></div>

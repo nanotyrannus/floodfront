@@ -45,7 +45,7 @@ userRouter
     .get("/event", function* () {
         //TODO return events
         let result = yield query(`
-            SELECT id, name, description, ST_AsGeoJSON( bbox )
+            SELECT id, name, description, ST_AsGeoJSON( bbox ) AS bounds
             FROM event
         `)
         console.log(result.rows)
@@ -66,9 +66,9 @@ userRouter
         let params = this.params
         this.body = params.id
     })
-    .post("/marker/:eventId", function* () { // Create marker
-        console.log(this.request.files)
-        this.body = "blah"
+    .post("/marker/:eventId", body(), function* () { // Create marker
+        console.log(this.request.fields)
+        this.body = `Marker recieved ${ null }`
     })
     .post("/marker/:markerId/update", function* () { //Update marker
 

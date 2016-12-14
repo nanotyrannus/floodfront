@@ -9,14 +9,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
 var event_service_1 = require('./event.service');
 var rest_service_1 = require('../shared/rest.service');
 var environment_service_1 = require('../shared/environment.service');
 var EventComponent = (function () {
-    function EventComponent(env, rest, eventService) {
+    function EventComponent(env, rest, eventService, router) {
         this.env = env;
         this.rest = rest;
         this.eventService = eventService;
+        this.router = router;
     }
     EventComponent.prototype.ngOnInit = function () {
         console.log("Base URL : " + this.env.baseUrl);
@@ -37,6 +39,13 @@ var EventComponent = (function () {
             console.error(error);
         });
     };
+    EventComponent.prototype.enterEvent = function (eventId, eventName, bounds) {
+        console.log("enterEvent: " + eventId + ": " + eventName);
+        this.eventService.eventId = eventId;
+        this.eventService.eventName = eventName;
+        this.eventService.bounds = JSON.parse(bounds);
+        this.router.navigate(['/map']);
+    };
     EventComponent.prototype.createEvent = function () {
         console.log("create event clicked");
         this.eventService.createEvent(this.eventName, this.description, {
@@ -54,7 +63,7 @@ var EventComponent = (function () {
             selector: 'event-component',
             templateUrl: '/app/event/event.component.html'
         }), 
-        __metadata('design:paramtypes', [environment_service_1.EnvironmentService, rest_service_1.RestService, event_service_1.EventService])
+        __metadata('design:paramtypes', [environment_service_1.EnvironmentService, rest_service_1.RestService, event_service_1.EventService, router_1.Router])
     ], EventComponent);
     return EventComponent;
 }());

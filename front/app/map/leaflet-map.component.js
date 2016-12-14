@@ -10,19 +10,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
+var event_service_1 = require('../event/event.service');
 // import * as L from '/node_modules/leaflet/dist/leaflet.js'
 var L = require('/node_modules/leaflet/dist/leaflet.js');
 var LeafletMapComponent = (function () {
-    function LeafletMapComponent(router) {
+    function LeafletMapComponent(router, eventService) {
         this.router = router;
+        this.eventService = eventService;
         this.primed = false;
     }
     LeafletMapComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.eventName = this.eventService.eventName;
+        this.eventId = this.eventService.eventId;
+        this.bounds = this.eventService.bounds.coordinates;
+        console.log("Getting markers for " + this.eventId + ": " + this.eventName);
+        console.log(this.bounds);
+        if (this.eventId == null) {
+            console.warn("eventId null, returning to /event");
+            this.router.navigate(['/event']);
+        }
         this.leafletMap = L.map('map', {
             zoom: 12
         });
-        this.leafletMap.setView([40.7, -73.9]);
+        // this.leafletMap.fitBounds(L.latLng(this.bounds[0][0][1], this.bounds[0][0][0]), L.latLng(this.bounds[0][2][1], this.bounds[0][2][0])) // Bottom left and top right corners of bbox
+        // console.log("SouthWest",L.latLng(this.bounds[0][0][1], this.bounds[0][0][0])) 
+        // console.log("NorthEast", L.latLng(this.bounds[0][2][1], this.bounds[0][2][0]))
+        this.leafletMap.setView([this.bounds[0][0][1], this.bounds[0][0][0]]);
+        // console.log("this.bounds[0]")
+        console.log(this.bounds[0]);
         this.leafletMap.on('click', function (event) {
             if (_this.primed) {
                 _this.primed = false;
@@ -48,7 +64,7 @@ var LeafletMapComponent = (function () {
         }).addTo(this.leafletMap);
     };
     LeafletMapComponent.prototype.gotoEvents = function () {
-        this.router.navigate(['/']);
+        this.router.navigate(['/event']);
     };
     LeafletMapComponent.prototype.primeDefaultMarker = function () {
         this.primed = true;
@@ -59,7 +75,7 @@ var LeafletMapComponent = (function () {
             selector: 'leaflet-component',
             templateUrl: '/app/map/leaflet-map.component.html'
         }), 
-        __metadata('design:paramtypes', [router_1.Router])
+        __metadata('design:paramtypes', [router_1.Router, event_service_1.EventService])
     ], LeafletMapComponent);
     return LeafletMapComponent;
 }());

@@ -27,6 +27,16 @@ var EventService = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(EventService.prototype, "eventName", {
+        get: function () {
+            return this._eventName;
+        },
+        set: function (value) {
+            this._eventName = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     EventService.prototype.createEvent = function (name, desc, bounds) {
         console.log("EventService#createEvent() called");
         this.rest.post("/event", { "name": name, "description": desc, "bounds": bounds }).subscribe(function (data) {
