@@ -12,12 +12,18 @@ export class UserService {
     public isAdmin: boolean = false
 
     constructor(private rest: RestService, private router: Router) {
-
+        /**
+         * Rudimentary logout. Must replace with cookie based session.
+         */
+        if (!this.email) {
+            this.router.navigate(['/'])
+        }
     }
 
     login(email: string): void {
         this.rest.post("/login", { "email" : email }).subscribe(
             data => {
+                this.email = email
                 console.log(data)
                 console.log("post: no error")
                 this.router.navigate(['/event'])

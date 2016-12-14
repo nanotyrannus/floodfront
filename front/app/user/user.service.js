@@ -17,10 +17,17 @@ var UserService = (function () {
         this.router = router;
         this.loggedIn = false;
         this.isAdmin = false;
+        /**
+         * Rudimentary logout. Must replace with cookie based session.
+         */
+        if (!this.email) {
+            this.router.navigate(['/']);
+        }
     }
     UserService.prototype.login = function (email) {
         var _this = this;
         this.rest.post("/login", { "email": email }).subscribe(function (data) {
+            _this.email = email;
             console.log(data);
             console.log("post: no error");
             _this.router.navigate(['/event']);

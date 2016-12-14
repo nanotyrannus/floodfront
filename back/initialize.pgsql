@@ -16,5 +16,7 @@ CREATE TABLE IF NOT EXISTS marker (
     id                              SERIAL UNIQUE,
     user_id         INTEGER         REFERENCES app_user (id) ON DELETE CASCADE,
     event_id        INTEGER         REFERENCES event (id) ON DELETE CASCADE,
-    heading         FLOAT8          CONSTRAINT degree_range_check CHECK (heading >= 0 AND heading <=360)
+    heading         FLOAT8          CONSTRAINT degree_range_check CHECK (heading >= 0 AND heading <=360),
+    lat             NUMERIC,
+    lon             NUMERIC
 );
