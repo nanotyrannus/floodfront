@@ -1,0 +1,62 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var event_service_1 = require('./event.service');
+var rest_service_1 = require('../shared/rest.service');
+var environment_service_1 = require('../shared/environment.service');
+var EventComponent = (function () {
+    function EventComponent(env, rest, eventService) {
+        this.env = env;
+        this.rest = rest;
+        this.eventService = eventService;
+    }
+    EventComponent.prototype.ngOnInit = function () {
+        console.log("Base URL : " + this.env.baseUrl);
+        // this.rest.post("/ping", {"hey" : 1}).subscribe(data => {
+        //   console.log(data.json())
+        // }, error => {
+        //   console.error(error)
+        // })
+        this.getEvents();
+    };
+    EventComponent.prototype.getEvents = function () {
+        var _this = this;
+        this.eventService.getEvents().subscribe(function (data) {
+            var events = data.json();
+            _this.events = events;
+            console.log(events);
+        }, function (error) {
+            console.error(error);
+        });
+    };
+    EventComponent.prototype.createEvent = function () {
+        console.log("create event clicked");
+        this.eventService.createEvent(this.eventName, this.description, {
+            "minLon": this.minLon,
+            "minLat": this.minLat,
+            "maxLat": this.maxLat,
+            "maxLon": this.maxLon
+        });
+    };
+    EventComponent.prototype.createEventButtonState = function () {
+        return !(this.description && this.eventName && this.maxLat && this.maxLon && this.minLat && this.minLon);
+    };
+    EventComponent = __decorate([
+        core_1.Component({
+            selector: 'event-component',
+            templateUrl: '/app/event/event.component.html'
+        }), 
+        __metadata('design:paramtypes', [environment_service_1.EnvironmentService, rest_service_1.RestService, event_service_1.EventService])
+    ], EventComponent);
+    return EventComponent;
+}());
+exports.EventComponent = EventComponent;
+//# sourceMappingURL=event.component.js.map

@@ -1,0 +1,26 @@
+<div class="login-component-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="login-container">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                        </span>
+                        <input type="text" (keypress.enter)="test()" class="form-control" placeholder="Email" [(ngModel)]="email">
+                    </div>
+                </div>
+                <button class="btn btn-default" [disabled]="buttonState()" (click)="login()">ENTER</button>
+            </div>
+            <div class="col-md-3 col-xs-0">
+                <span>second column</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>Icons made by <a class="link" href="http://www.freepik.com" title="Freepik">Freepik</a> from <a class="link" href="http://www.flaticon.com"
+            title="Flaticon">www.flaticon.com</a> is licensed by <a class="link" href="http://creativecommons.org/licenses/by/3.0/"
+            title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+</div>
+

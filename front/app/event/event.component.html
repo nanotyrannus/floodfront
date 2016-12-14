@@ -1,0 +1,25 @@
+<div>
+    <a routerLink="/map">MAP</a>
+    event component
+    <div class="event-list-container">
+        <ul>
+            <li *ngFor="let event of events">
+                {{ event.name }}
+            </li>
+        </ul>
+    </div>
+    <form enctype="multipart/form-data" action="http://localhost:8080/upload" method="POST">
+        <input type="file" name="picture" accept="image/*">
+    <input type="submit">
+    </form>
+    <form class="form-inline">
+        <div class="form group"><input class="form-control" type="text" name="name" placeholder="Event name" [(ngModel)]="eventName"></div>
+        <div class="form group"><input class="form-control" type="text" name="description" placeholder="Desc." [(ngModel)]="description"></div>
+        <div class="form group"><input class="form-control" type="text" name="minLat" placeholder="Min lat" [(ngModel)]="minLat"></div>
+        <div class="form group"><input class="form-control" type="text" name="minLon" placeholder="Min lon" [(ngModel)]="minLon"></div>
+        <div class="form group"><input class="form-control" type="text" name="maxLat" placeholder="Max lat" [(ngModel)]="maxLat"></div>
+        <div class="form group"><input class="form-control" type="text" name="maxLon" placeholder="Max lon" [(ngModel)]="maxLon"></div>
+        <button class="btn btn-default" (click)="createEvent()" [disabled]="createEventButtonState()">CREATE EVENT</button>
+    </form>
+    <a href="http://localhost:8080/download" download>Download link</a>
+</div>
