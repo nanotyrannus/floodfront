@@ -45,12 +45,12 @@ var EventService = (function () {
             console.error(error);
         });
     };
-    EventService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [rest_service_1.RestService])
-    ], EventService);
     return EventService;
 }());
+EventService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [rest_service_1.RestService])
+], EventService);
 exports.EventService = EventService;
 var Bounds = (function () {
     function Bounds() {

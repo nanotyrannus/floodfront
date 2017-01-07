@@ -8,11 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var event_service_1 = require('./event.service');
-var rest_service_1 = require('../shared/rest.service');
-var environment_service_1 = require('../shared/environment.service');
+var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var event_service_1 = require("./event.service");
+var rest_service_1 = require("../shared/rest.service");
+var environment_service_1 = require("../shared/environment.service");
 var EventComponent = (function () {
     function EventComponent(env, rest, eventService, router) {
         this.env = env;
@@ -58,14 +58,44 @@ var EventComponent = (function () {
     EventComponent.prototype.createEventButtonState = function () {
         return !(this.description && this.eventName && this.maxLat && this.maxLon && this.minLat && this.minLon);
     };
-    EventComponent = __decorate([
-        core_1.Component({
-            selector: 'event-component',
-            templateUrl: '/app/event/event.component.html'
-        }), 
-        __metadata('design:paramtypes', [environment_service_1.EnvironmentService, rest_service_1.RestService, event_service_1.EventService, router_1.Router])
-    ], EventComponent);
+    /**Test
+     *
+     */
+    EventComponent.prototype.uploadImage = function () {
+        if (!this.file)
+            return;
+        console.log(this.file);
+        var formData = new FormData();
+        formData.append("image", this.file);
+        formData.append("foo", "bar");
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", window.location.protocol + "//" + window.location.hostname + ":8080/upload");
+        xhr.send(formData);
+    };
+    EventComponent.prototype.readUrl = function (value) {
+        var _this = this;
+        var test = document.getElementById("test");
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            test.src = e.target.result;
+            _this.dataUrl = test.src;
+        };
+        reader.readAsDataURL(value.target.files[0]);
+        this.file = value.target.files[0];
+        console.log("readURL called");
+        console.log(value);
+    };
     return EventComponent;
 }());
+EventComponent = __decorate([
+    core_1.Component({
+        selector: 'event-component',
+        templateUrl: '/app/event/event.component.html'
+    }),
+    __metadata("design:paramtypes", [environment_service_1.EnvironmentService,
+        rest_service_1.RestService,
+        event_service_1.EventService,
+        router_1.Router])
+], EventComponent);
 exports.EventComponent = EventComponent;
 //# sourceMappingURL=event.component.js.map

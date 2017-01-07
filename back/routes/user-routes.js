@@ -1,7 +1,8 @@
 "use strict";
 const Router = require("koa-router");
 const database_1 = require("../shared/database");
-const fs = require("fs");
+// import fs = require("fs")
+const fs = require("fs-extra");
 const body = require("koa-better-body");
 const send = require("koa-send");
 exports.userRouter = new Router();
@@ -65,6 +66,9 @@ exports.userRouter
     .post("/marker/:eventId/retrieve", body(), function* () {
     let eventId = this.params.eventId;
     let email = this.request.fields.email;
+    if (email == null || eventId == null) {
+        throw new Error(`Bad request: ${email} ${eventId}`);
+    }
     let userId = (yield database_1.query(`
             SELECT id
             FROM app_user
@@ -114,7 +118,8 @@ exports.userRouter
     .post("/upload", body(), function* (next) {
     console.log(this.request.fields);
     console.log(this.request.files);
-    let file = fs.renameSync(this.request.files[0].path, `./uploads/${this.request.files[0].name}`);
+    console.log(this.request.files[0].path);
+    let file = fs.copySync(this.request.files[0].path, `./uploads/${this.request.fields.marker_id}.jpg`);
     console.log(this.request.body);
     this.body = "hey";
     yield next;

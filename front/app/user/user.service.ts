@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core"
 import { RestService } from "../shared/rest.service"
+import { CookieService } from "../shared/cookie.service"
 import { Observable } from "rxjs/Observable"
 import { Router } from "@angular/router"
 
@@ -11,19 +12,21 @@ export class UserService {
     public loggedIn: boolean = false
     public isAdmin: boolean = false
 
-    constructor(private rest: RestService, private router: Router) {
+    constructor(private rest: RestService, private router: Router, private cookieService: CookieService) {
         /**
          * Rudimentary logout. Must replace with cookie based session.
          */
-        if (!this.email) {
+        if (!this.cookieService.get("email")) {
             this.router.navigate(['/'])
+        } else {
+            this.email = this.cookieService.get("email")
         }
     }
 
     login(email: string): void {
         this.rest.post("/login", { "email" : email }).subscribe(
             data => {
-                this.email = email
+                this.cookieService.set("email", email)
                 console.log(data)
                 console.log("post: no error")
                 this.router.navigate(['/event'])

@@ -18,6 +18,9 @@ export class EventComponent {
     maxLat: number
     maxLon: number
 
+    dataUrl: any
+    file: any
+
     constructor(
         private env: EnvironmentService,
         private rest: RestService,
@@ -68,5 +71,33 @@ export class EventComponent {
 
     createEventButtonState() {
       return !(this.description && this.eventName && this.maxLat && this.maxLon && this.minLat && this.minLon)
+    }
+    
+    /**Test
+     * 
+     */
+
+    uploadImage() {
+      if (!this.file) return
+      console.log(this.file)
+      let formData = new FormData()
+      formData.append("image", this.file)
+      formData.append("foo", "bar")
+      let xhr = new XMLHttpRequest()
+      xhr.open("POST", `${window.location.protocol}//${window.location.hostname}:8080/upload`)
+      xhr.send(formData)
+    }
+
+    readUrl(value: any) {
+      let test = document.getElementById("test")
+      var reader = new FileReader()
+      reader.onload = e => {
+        test.src = e.target.result
+        this.dataUrl = test.src
+      }
+      reader.readAsDataURL(value.target.files[0])
+      this.file = value.target.files[0]
+      console.log(`readURL called`)
+      console.log(value)
     }
 }

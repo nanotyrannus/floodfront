@@ -1,6 +1,7 @@
 import * as Router from "koa-router"
 import { query } from "../shared/database"
-import fs = require("fs")
+// import fs = require("fs")
+const fs: any = require("fs-extra")
 const body: any = require("koa-better-body")
 const send: any = require("koa-send")
 
@@ -65,6 +66,9 @@ userRouter
     .post("/marker/:eventId/retrieve", body(), function* () { // Get all markers
         let eventId = this.params.eventId
         let email = this.request.fields.email
+        if (email == null || eventId == null) {
+            throw new Error(`Bad request: ${ email } ${ eventId }`)
+        }
         let userId = (yield query(`
             SELECT id
             FROM app_user
@@ -115,7 +119,8 @@ userRouter
     .post("/upload", body(), function* (next) {
         console.log(this.request.fields)
         console.log(this.request.files)
-        let file = fs.renameSync(this.request.files[0].path, `./uploads/${ this.request.files[0].name }`)
+        console.log(this.request.files[0].path)
+        let file = fs.copySync(this.request.files[0].path, `./uploads/${ this.request.fields.marker_id }.jpg`)
         console.log(this.request.body)
         this.body = "hey"
         yield next

@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 import { EventService } from '../event/event.service'
 import { RestService } from '../shared/rest.service'
 import { UserService } from '../user/user.service'
+import { NgZone } from '@angular/core'
 // import * as L from '/node_modules/leaflet/dist/leaflet.js'
 let L: any = require('/node_modules/leaflet/dist/leaflet.js')
 @Component({
@@ -12,7 +13,9 @@ let L: any = require('/node_modules/leaflet/dist/leaflet.js')
 export class LeafletMapComponent {
   private leafletMap: any
   private primed: boolean = false
+  private markerType: MarkerType
   private markers: Marker[]
+  private files: Map<any, File> = new Map<any, File>()
   private eventName: string
   private eventId: number
   private bounds: any
@@ -21,11 +24,21 @@ export class LeafletMapComponent {
     private router: Router,
     private eventService: EventService,
     private userService: UserService,
-    private rest: RestService) { }
+    private rest: RestService,
+    private zone: NgZone) { }
   ngOnInit() {
-    this.eventName = this.eventService.eventName
-    this.eventId = this.eventService.eventId
-    this.bounds = this.eventService.bounds.coordinates
+    window.leafletComponent = {
+      "upload": (id) => this.upload(id),
+      "readUrl": (val, id) => this.readUrl(val, id)
+    }
+    try {
+      this.eventName = this.eventService.eventName
+      this.eventId = this.eventService.eventId
+      this.bounds = this.eventService.bounds.coordinates
+    } catch (err) {
+      console.error(err)
+      this.router.navigate(['/event'])
+    }
     console.log(`Getting markers for ${this.eventId}: ${this.eventName}`)
     console.log(this.bounds)
     if (this.eventId == null) {
@@ -58,9 +71,10 @@ export class LeafletMapComponent {
         console.log(`dragend:`, event.target._latlng)
         this.updateMarker(marker.id, event.target._latlng)
       })
+      this.bindPopup(marker)
       console.log(`placed marker at ${event.latlng.lat}, ${event.latlng.lng}`)
       this.createMarker("point", event.latlng.lat, event.latlng.lng, null, marker)
-      
+
       marker.addTo(this.leafletMap)
     })
     //       let map = L.map('map', {
@@ -83,12 +97,16 @@ export class LeafletMapComponent {
   }
   private primeDefaultMarker(): void {
     this.primed = true
+    this.markerType = MarkerType.DEFAULT
   }
-  private primeDirectionalMarker(): void { }
+  private primeDirectionalMarker(): void {
+    this.primed = true
+    this.markerType = MarkerType.DIRECTIONAL
+  }
 
   private getMarkers() {
-    this.rest.post(`/marker/${ this.eventId }/retrieve`, {
-      "email" : this.userService.email
+    this.rest.post(`/marker/${this.eventId}/retrieve`, {
+      "email": this.userService.email
     }).subscribe(data => {
       let body = data.json()
       body.markers.forEach(marker => {
@@ -96,16 +114,16 @@ export class LeafletMapComponent {
       })
       console.log("get markers", body)
 
-    }, error => {console.error(error)})
+    }, error => { console.error(error) })
   }
 
-  private createMarker(type: string, lat: number, lon: number, heading: number = null, marker: any=null) {
-    this.rest.post(`/marker/${ this.eventId }`, {
-      "type" : type,
-      "lat" : lat,
-      "lon" : lon,
-      "heading" : heading,
-      "email" : this.userService.email
+  private createMarker(type: string, lat: number, lon: number, heading: number = null, marker: any = null) {
+    this.rest.post(`/marker/${this.eventId}`, {
+      "type": type,
+      "lat": lat,
+      "lon": lon,
+      "heading": heading,
+      "email": this.userService.email
     }).subscribe(
       data => {
         let body = data.json()
@@ -115,14 +133,15 @@ export class LeafletMapComponent {
       error => {
         console.error(error)
       }
-    )
+      )
   }
 
   private spawnMarker(latlng: any, type: string = null, oldMarker: any = null) { // Spawn client-side marker
-    let marker = L.marker(latlng, { "draggable" : true })
+    let marker = L.marker(latlng, { "draggable": true })
     if (oldMarker) {
       marker.id = oldMarker.id
-      marker.bindPopup(`<img class="thumbnail map-thumbnail" src="/assets/images/placeholder${Math.floor(Math.random()*100)%4}.jpg"><form enctype="multipart/form-data" action="http://localhost:8080/upload" method="POST"><input type="file" name="picture" accept="image/*"><input type="submit">`)
+      console.log(`Marker of id ${oldMarker.id} retrieved`)
+      this.bindPopup(marker)
     }
     marker.on('dragend', e => {
       this.updateMarker(marker.id, e.target._latlng)
@@ -131,13 +150,46 @@ export class LeafletMapComponent {
     marker.addTo(this.leafletMap)
   }
 
+  private bindPopup(marker: any, type: MarkerType = MarkerType.DEFAULT) {
+    console.log(`from bindPopup: ${marker.id}`)
+    let id = marker.id
+    marker.bindPopup(`
+        <img id="thumbnail-${marker.id}" class="thumbnail map-thumbnail" src="http://placehold.it/100x100">
+        <form enctype="multipart/form-data" action="http://localhost:8080/upload" method="POST">
+        <input type="file" name="picture" accept="image/*" onchange="window.leafletComponent.readUrl(this, ${marker.id})">
+        </form>
+        <button class="btn btn-default" onclick="window.leafletComponent.upload(${marker.id})">UPLOAD</button>`
+    )
+  }
+
+  private readUrl(value: any, markerId: number) {
+    console.log(value)
+    var elm = document.getElementById(`thumbnail-${markerId}`)
+    var reader = new FileReader() //
+    reader.onload = e => {
+      elm.src = e.target.result
+    }
+    reader.readAsDataURL(value.files[0])
+    this.files.set(markerId, value.files[0])
+  }
+
   private updateMarker(id: number, latlng: any) {
-    this.rest.post(`/marker/${ id }/update`, {
-      "lat" : latlng.lat,
-      "lon" : latlng.lng
+    this.rest.post(`/marker/${id}/update`, {
+      "lat": latlng.lat,
+      "lon": latlng.lng
     }).subscribe(data => {
       console.log(`marker update`, data)
     }, error => { console.error(error) })
+  }
+
+  upload(markerId: number) {
+    console.log(`Test called: ${markerId}`)
+    let formData = new FormData()
+    formData.append("image", this.files.get(markerId))
+    formData.append("marker_id", markerId)
+    let xhr = new XMLHttpRequest()
+    xhr.open("POST", `${window.location.protocol}//${window.location.hostname}:8080/upload`)
+    xhr.send(formData)
   }
 }
 
@@ -147,4 +199,9 @@ class Marker {
   type: string
   heading: number
   id: number
+}
+
+enum MarkerType {
+  DEFAULT,
+  DIRECTIONAL
 }

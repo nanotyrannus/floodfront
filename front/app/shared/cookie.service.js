@@ -9,16 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var EnvironmentService = (function () {
-    function EnvironmentService() {
-        this.apiPort = 8080;
-        this.baseUrl = window.location.protocol + "//" + window.location.hostname + ":" + this.apiPort;
+// Cookies imported globally from cookies.js
+// import Cookies = require("js-cookie")
+var CookieService = (function () {
+    function CookieService() {
     }
-    return EnvironmentService;
+    CookieService.prototype.set = function (key, value) {
+        Cookies.set(key, value);
+    };
+    CookieService.prototype.get = function (key) {
+        return Cookies.get(key);
+    };
+    CookieService.prototype.remove = function (key) {
+        Cookies.remove(key);
+    };
+    return CookieService;
 }());
-EnvironmentService = __decorate([
+CookieService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [])
-], EnvironmentService);
-exports.EnvironmentService = EnvironmentService;
-//# sourceMappingURL=environment.service.js.map
+], CookieService);
+exports.CookieService = CookieService;
+//# sourceMappingURL=cookie.service.js.map

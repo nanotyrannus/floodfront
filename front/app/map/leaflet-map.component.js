@@ -8,26 +8,39 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var event_service_1 = require('../event/event.service');
-var rest_service_1 = require('../shared/rest.service');
-var user_service_1 = require('../user/user.service');
+var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var event_service_1 = require("../event/event.service");
+var rest_service_1 = require("../shared/rest.service");
+var user_service_1 = require("../user/user.service");
+var core_2 = require("@angular/core");
 // import * as L from '/node_modules/leaflet/dist/leaflet.js'
 var L = require('/node_modules/leaflet/dist/leaflet.js');
 var LeafletMapComponent = (function () {
-    function LeafletMapComponent(router, eventService, userService, rest) {
+    function LeafletMapComponent(router, eventService, userService, rest, zone) {
         this.router = router;
         this.eventService = eventService;
         this.userService = userService;
         this.rest = rest;
+        this.zone = zone;
         this.primed = false;
+        this.files = new Map();
     }
     LeafletMapComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.eventName = this.eventService.eventName;
-        this.eventId = this.eventService.eventId;
-        this.bounds = this.eventService.bounds.coordinates;
+        window.leafletComponent = {
+            "upload": function (id) { return _this.upload(id); },
+            "readUrl": function (val, id) { return _this.readUrl(val, id); }
+        };
+        try {
+            this.eventName = this.eventService.eventName;
+            this.eventId = this.eventService.eventId;
+            this.bounds = this.eventService.bounds.coordinates;
+        }
+        catch (err) {
+            console.error(err);
+            this.router.navigate(['/event']);
+        }
         console.log("Getting markers for " + this.eventId + ": " + this.eventName);
         console.log(this.bounds);
         if (this.eventId == null) {
@@ -60,6 +73,7 @@ var LeafletMapComponent = (function () {
                 console.log("dragend:", event.target._latlng);
                 _this.updateMarker(marker.id, event.target._latlng);
             });
+            _this.bindPopup(marker);
             console.log("placed marker at " + event.latlng.lat + ", " + event.latlng.lng);
             _this.createMarker("point", event.latlng.lat, event.latlng.lng, null, marker);
             marker.addTo(_this.leafletMap);
@@ -81,8 +95,12 @@ var LeafletMapComponent = (function () {
     };
     LeafletMapComponent.prototype.primeDefaultMarker = function () {
         this.primed = true;
+        this.markerType = MarkerType.DEFAULT;
     };
-    LeafletMapComponent.prototype.primeDirectionalMarker = function () { };
+    LeafletMapComponent.prototype.primeDirectionalMarker = function () {
+        this.primed = true;
+        this.markerType = MarkerType.DIRECTIONAL;
+    };
     LeafletMapComponent.prototype.getMarkers = function () {
         var _this = this;
         this.rest.post("/marker/" + this.eventId + "/retrieve", {
@@ -119,12 +137,29 @@ var LeafletMapComponent = (function () {
         var marker = L.marker(latlng, { "draggable": true });
         if (oldMarker) {
             marker.id = oldMarker.id;
-            marker.bindPopup("<img class=\"thumbnail map-thumbnail\" src=\"/assets/images/placeholder" + Math.floor(Math.random() * 100) % 4 + ".jpg\"><form enctype=\"multipart/form-data\" action=\"http://localhost:8080/upload\" method=\"POST\"><input type=\"file\" name=\"picture\" accept=\"image/*\"><input type=\"submit\">");
+            console.log("Marker of id " + oldMarker.id + " retrieved");
+            this.bindPopup(marker);
         }
         marker.on('dragend', function (e) {
             _this.updateMarker(marker.id, e.target._latlng);
         });
         marker.addTo(this.leafletMap);
+    };
+    LeafletMapComponent.prototype.bindPopup = function (marker, type) {
+        if (type === void 0) { type = MarkerType.DEFAULT; }
+        console.log("from bindPopup: " + marker.id);
+        var id = marker.id;
+        marker.bindPopup("\n        <img id=\"thumbnail-" + marker.id + "\" class=\"thumbnail map-thumbnail\" src=\"http://placehold.it/100x100\">\n        <form enctype=\"multipart/form-data\" action=\"http://localhost:8080/upload\" method=\"POST\">\n        <input type=\"file\" name=\"picture\" accept=\"image/*\" onchange=\"window.leafletComponent.readUrl(this, " + marker.id + ")\">\n        </form>\n        <button class=\"btn btn-default\" onclick=\"window.leafletComponent.upload(" + marker.id + ")\">UPLOAD</button>");
+    };
+    LeafletMapComponent.prototype.readUrl = function (value, markerId) {
+        console.log(value);
+        var elm = document.getElementById("thumbnail-" + markerId);
+        var reader = new FileReader(); //
+        reader.onload = function (e) {
+            elm.src = e.target.result;
+        };
+        reader.readAsDataURL(value.files[0]);
+        this.files.set(markerId, value.files[0]);
     };
     LeafletMapComponent.prototype.updateMarker = function (id, latlng) {
         this.rest.post("/marker/" + id + "/update", {
@@ -134,19 +169,37 @@ var LeafletMapComponent = (function () {
             console.log("marker update", data);
         }, function (error) { console.error(error); });
     };
-    LeafletMapComponent = __decorate([
-        core_1.Component({
-            selector: 'leaflet-component',
-            templateUrl: '/app/map/leaflet-map.component.html'
-        }), 
-        __metadata('design:paramtypes', [router_1.Router, event_service_1.EventService, user_service_1.UserService, rest_service_1.RestService])
-    ], LeafletMapComponent);
+    LeafletMapComponent.prototype.upload = function (markerId) {
+        console.log("Test called: " + markerId);
+        var formData = new FormData();
+        formData.append("image", this.files.get(markerId));
+        formData.append("marker_id", markerId);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", window.location.protocol + "//" + window.location.hostname + ":8080/upload");
+        xhr.send(formData);
+    };
     return LeafletMapComponent;
 }());
+LeafletMapComponent = __decorate([
+    core_1.Component({
+        selector: 'leaflet-component',
+        templateUrl: '/app/map/leaflet-map.component.html'
+    }),
+    __metadata("design:paramtypes", [router_1.Router,
+        event_service_1.EventService,
+        user_service_1.UserService,
+        rest_service_1.RestService,
+        core_2.NgZone])
+], LeafletMapComponent);
 exports.LeafletMapComponent = LeafletMapComponent;
 var Marker = (function () {
     function Marker() {
     }
     return Marker;
 }());
+var MarkerType;
+(function (MarkerType) {
+    MarkerType[MarkerType["DEFAULT"] = 0] = "DEFAULT";
+    MarkerType[MarkerType["DIRECTIONAL"] = 1] = "DIRECTIONAL";
+})(MarkerType || (MarkerType = {}));
 //# sourceMappingURL=leaflet-map.component.js.map

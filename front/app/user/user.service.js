@@ -10,35 +10,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var rest_service_1 = require("../shared/rest.service");
+var cookie_service_1 = require("../shared/cookie.service");
 var router_1 = require("@angular/router");
 var UserService = (function () {
-    function UserService(rest, router) {
+    function UserService(rest, router, cookieService) {
         this.rest = rest;
         this.router = router;
+        this.cookieService = cookieService;
         this.loggedIn = false;
         this.isAdmin = false;
         /**
          * Rudimentary logout. Must replace with cookie based session.
          */
-        if (!this.email) {
+        if (!this.cookieService.get("email")) {
             this.router.navigate(['/']);
+        }
+        else {
+            this.email = this.cookieService.get("email");
         }
     }
     UserService.prototype.login = function (email) {
         var _this = this;
         this.rest.post("/login", { "email": email }).subscribe(function (data) {
-            _this.email = email;
+            _this.cookieService.set("email", email);
             console.log(data);
             console.log("post: no error");
             _this.router.navigate(['/event']);
         }, function (error) {
         });
     };
-    UserService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [rest_service_1.RestService, router_1.Router])
-    ], UserService);
     return UserService;
 }());
+UserService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [rest_service_1.RestService, router_1.Router, cookie_service_1.CookieService])
+], UserService);
 exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

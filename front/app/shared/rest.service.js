@@ -24,11 +24,12 @@ var RestService = (function () {
         if (options === void 0) { options = null; }
         return this.http.get("" + this.env.baseUrl + path, options);
     };
-    RestService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http, environment_service_1.EnvironmentService])
-    ], RestService);
     return RestService;
 }());
+RestService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.Http,
+        environment_service_1.EnvironmentService])
+], RestService);
 exports.RestService = RestService;
 //# sourceMappingURL=rest.service.js.map
