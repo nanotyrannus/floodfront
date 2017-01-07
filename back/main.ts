@@ -42,7 +42,7 @@ co.wrap(function* () {
         yield send(this, "index.html", { "root" : config.appRoot})
     } else if (this.path.substring(0, 14) === "/node_modules/") {
         yield send(this, this.path, { "root" : `${ config.appRoot }`})
-    } else if (this.path.substring(0,5) === "/dist") {
+    } else { //if (this.path.substring(0,5) === "/dist") {
         yield send(this, `${ this.path }`, { "root" : config.appRoot })
     }
 })
