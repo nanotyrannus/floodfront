@@ -92,8 +92,8 @@ export class EventComponent {
       let test = document.getElementById("test")
       var reader = new FileReader()
       reader.onload = e => {
-        test.src = e.target.result
-        this.dataUrl = test.src
+        test['src'] = e.target['result']
+        this.dataUrl = test['src']
       }
       reader.readAsDataURL(value.target.files[0])
       this.file = value.target.files[0]

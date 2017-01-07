@@ -77,8 +77,8 @@ var EventComponent = (function () {
         var test = document.getElementById("test");
         var reader = new FileReader();
         reader.onload = function (e) {
-            test.src = e.target.result;
-            _this.dataUrl = test.src;
+            test['src'] = e.target['result'];
+            _this.dataUrl = test['src'];
         };
         reader.readAsDataURL(value.target.files[0]);
         this.file = value.target.files[0];

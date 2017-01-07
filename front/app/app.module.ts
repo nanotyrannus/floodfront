@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component'
 import { EventComponent } from './event/event.component'
 import { RestService } from './shared/rest.service'
 import { CookieService } from './shared/cookie.service'
+import { NavigationService } from './shared/navigation.service'
 import { EnvironmentService } from './shared/environment.service'
 import { UserService } from './user/user.service'
 import { EventService } from './event/event.service'
@@ -44,7 +45,8 @@ import { EventService } from './event/event.service'
         RestService,
         UserService,
         EventService,
-        CookieService
+        CookieService,
+        NavigationService
     ],
     bootstrap: [AppComponent]
 })

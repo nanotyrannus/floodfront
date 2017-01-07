@@ -19,6 +19,7 @@ var login_component_1 = require("./login/login.component");
 var event_component_1 = require("./event/event.component");
 var rest_service_1 = require("./shared/rest.service");
 var cookie_service_1 = require("./shared/cookie.service");
+var navigation_service_1 = require("./shared/navigation.service");
 var environment_service_1 = require("./shared/environment.service");
 var user_service_1 = require("./user/user.service");
 var event_service_1 = require("./event/event.service");
@@ -59,7 +60,8 @@ AppModule = __decorate([
             rest_service_1.RestService,
             user_service_1.UserService,
             event_service_1.EventService,
-            cookie_service_1.CookieService
+            cookie_service_1.CookieService,
+            navigation_service_1.NavigationService
         ],
         bootstrap: [app_component_1.AppComponent]
     }),

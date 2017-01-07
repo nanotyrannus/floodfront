@@ -2,13 +2,22 @@ import * as Koa from "koa"
 import * as config from "./shared/config"
 import { userRouter } from "./routes/user-routes"
 import { query } from "./shared/database"
+import http = require("http")
+import https = require("https")
+import enforceSsl = require("koa-sslify")
 import fs = require("fs")
+import send = require("koa-send")
 
 const body: any = require("koa-better-body")
 const path: any = require("path")
 const co: any = require("co")
 const cors: any = require("koa-cors")
 const app = new Koa()
+
+const sslOptions = {
+    "key" : fs.readFileSync(config.keyPath),
+    "cert" : fs.readFileSync(config.certPath)
+}
 
 
 co.wrap(function* () {
@@ -24,9 +33,22 @@ co.wrap(function* () {
     // app.use(function* () {
     //     console.log(this.request.files)
     // })
+    app.use(enforceSsl())
     app.use(cors())
     app.use(userRouter.routes())
-    app.listen(config.port)
+    app.use(function* (next) {
+    console.log(`Requesting ${ this.path }`)
+    if (this.path === "/") {
+        yield send(this, "index.html", { "root" : config.appRoot})
+    } else if (this.path.substring(0, 14) === "/node_modules/") {
+        yield send(this, this.path, { "root" : `${ config.appRoot }`})
+    } else if (this.path.substring(0,5) === "/dist") {
+        yield send(this, `${ this.path }`, { "root" : config.appRoot })
+    }
+})
+    // app.listen(config.port)
+    http.createServer(app.callback()).listen(config.port)
+    https.createServer(sslOptions, app.callback()).listen(443)
     console.log(`Home: ${config.home}`)
     console.log(`Listening on ${config.port}`)
 })()

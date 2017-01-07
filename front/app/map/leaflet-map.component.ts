@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 import { EventService } from '../event/event.service'
 import { RestService } from '../shared/rest.service'
 import { UserService } from '../user/user.service'
+import { NavigationService } from '../shared/navigation.service'
 import { NgZone } from '@angular/core'
 // import * as L from '/node_modules/leaflet/dist/leaflet.js'
 let L: any = require('/node_modules/leaflet/dist/leaflet.js')
@@ -25,9 +26,10 @@ export class LeafletMapComponent {
     private eventService: EventService,
     private userService: UserService,
     private rest: RestService,
+    private nav: NavigationService,
     private zone: NgZone) { }
   ngOnInit() {
-    window.leafletComponent = {
+    window['leafletComponent'] = {
       "upload": (id) => this.upload(id),
       "readUrl": (val, id) => this.readUrl(val, id)
     }
@@ -64,6 +66,10 @@ export class LeafletMapComponent {
         'draggable': true
       }
       let marker = L.marker(event.latlng, markerOptions)
+      marker.type = this.markerType
+      if (marker.type === MarkerType.DIRECTIONAL) {
+        marker.heading = 0
+      }
       marker.on('drag', event => {
 
       })
@@ -73,7 +79,7 @@ export class LeafletMapComponent {
       })
       this.bindPopup(marker)
       console.log(`placed marker at ${event.latlng.lat}, ${event.latlng.lng}`)
-      this.createMarker("point", event.latlng.lat, event.latlng.lng, null, marker)
+      this.createMarker("point", event.latlng.lat, event.latlng.lng, (this.markerType === MarkerType.DIRECTIONAL) ? marker.heading : null, marker)
 
       marker.addTo(this.leafletMap)
     })
@@ -119,7 +125,7 @@ export class LeafletMapComponent {
 
   private createMarker(type: string, lat: number, lon: number, heading: number = null, marker: any = null) {
     this.rest.post(`/marker/${this.eventId}`, {
-      "type": type,
+      "type": type, //ignored on backend
       "lat": lat,
       "lon": lon,
       "heading": heading,
@@ -140,6 +146,10 @@ export class LeafletMapComponent {
     let marker = L.marker(latlng, { "draggable": true })
     if (oldMarker) {
       marker.id = oldMarker.id
+      if (oldMarker.heading !== null) {
+        marker.type = MarkerType.DIRECTIONAL
+        marker.heading = oldMarker.heading
+      }
       console.log(`Marker of id ${oldMarker.id} retrieved`)
       this.bindPopup(marker)
     }
@@ -153,13 +163,17 @@ export class LeafletMapComponent {
   private bindPopup(marker: any, type: MarkerType = MarkerType.DEFAULT) {
     console.log(`from bindPopup: ${marker.id}`)
     let id = marker.id
-    marker.bindPopup(`
+    let markup = `
         <img id="thumbnail-${marker.id}" class="thumbnail map-thumbnail" src="http://placehold.it/100x100">
         <form enctype="multipart/form-data" action="http://localhost:8080/upload" method="POST">
         <input type="file" name="picture" accept="image/*" onchange="window.leafletComponent.readUrl(this, ${marker.id})">
         </form>
-        <button class="btn btn-default" onclick="window.leafletComponent.upload(${marker.id})">UPLOAD</button>`
-    )
+        <button class="btn btn-default" onclick="window.leafletComponent.upload(${marker.id})">UPLOAD</button>
+    `
+    if (marker.type === MarkerType.DIRECTIONAL) {
+      markup += `<div>I'M DIRECTIONAL</div>`
+    }
+    marker.bindPopup(markup)
   }
 
   private readUrl(value: any, markerId: number) {
@@ -167,7 +181,7 @@ export class LeafletMapComponent {
     var elm = document.getElementById(`thumbnail-${markerId}`)
     var reader = new FileReader() //
     reader.onload = e => {
-      elm.src = e.target.result
+      elm['src'] = e.target['result']
     }
     reader.readAsDataURL(value.files[0])
     this.files.set(markerId, value.files[0])
@@ -180,6 +194,15 @@ export class LeafletMapComponent {
     }).subscribe(data => {
       console.log(`marker update`, data)
     }, error => { console.error(error) })
+  }
+
+  private centerMap() {
+      let coords = this.nav.getCurrentPosition()
+      if (coords === null) {
+        return
+      } else {
+        this.leafletMap.setView([coords.lat, coords.lon])
+      }
   }
 
   upload(markerId: number) {
