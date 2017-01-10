@@ -48,7 +48,7 @@ co.wrap(function* () {
 })
     // app.listen(config.port)
     http.createServer(app.callback()).listen(80)
-    http.createServer(app.callback()).listen(config.port)
+    // http.createServer(app.callback()).listen(config.port)
      https.createServer(sslOptions, app.callback()).listen(config.port)
     https.createServer(sslOptions, app.callback()).listen(443)
     console.log(`Home: ${config.home}`)
