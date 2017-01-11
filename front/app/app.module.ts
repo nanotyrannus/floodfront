@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http'
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'
+import { HashLocationStrategy, LocationStrategy } from "@angular/common"
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router'
 import { LeafletMapComponent } from './map/leaflet-map.component'
@@ -46,7 +47,8 @@ import { EventService } from './event/event.service'
         UserService,
         EventService,
         CookieService,
-        NavigationService
+        NavigationService, 
+        {"provide" : LocationStrategy, "useClass" : HashLocationStrategy}
     ],
     bootstrap: [AppComponent]
 })
