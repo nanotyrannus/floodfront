@@ -164,8 +164,8 @@ export class LeafletMapComponent {
     console.log(`from bindPopup: ${marker.id}`)
     let id = marker.id
     let markup = `
-        <img id="thumbnail-${marker.id}" class="thumbnail map-thumbnail" src="http://placehold.it/100x100">
-        <form enctype="multipart/form-data" action="http://localhost:8080/upload" method="POST">
+        <img id="thumbnail-${marker.id}" class="thumbnail map-thumbnail" src="https://placehold.it/100x100">
+        <form enctype="multipart/form-data" action="https://localhost:8080/upload" method="POST">
         <input type="file" name="picture" accept="image/*" onchange="window.leafletComponent.readUrl(this, ${marker.id})">
         </form>
         <button class="btn btn-default" onclick="window.leafletComponent.upload(${marker.id})">UPLOAD</button>

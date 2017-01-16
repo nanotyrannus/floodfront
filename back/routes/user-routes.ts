@@ -1,5 +1,6 @@
 import * as Router from "koa-router"
 import { query } from "../shared/database"
+import * as config from "../shared/config"
 // import fs = require("fs")
 const fs: any = require("fs-extra")
 const body: any = require("koa-better-body")
@@ -120,7 +121,7 @@ userRouter
         console.log(this.request.fields)
         console.log(this.request.files)
         console.log(this.request.files[0].path)
-        let file = fs.copySync(this.request.files[0].path, `./uploads/${ this.request.fields.marker_id }.jpg`)
+        let file = fs.copySync(this.request.files[0].path, `${ config.appRoot }/uploads/${ this.request.fields.marker_id }.jpg`)
         console.log(this.request.body)
         this.body = "hey"
         yield next
