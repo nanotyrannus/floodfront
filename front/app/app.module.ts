@@ -31,7 +31,10 @@ import { EventService } from './event/event.service'
                 path: 'event',
                 component: EventComponent
             }
-        ]),
+        ], 
+        {
+            useHash : true
+        }),
         HttpModule,
         FormsModule
     ],
