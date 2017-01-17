@@ -9,7 +9,7 @@ import { NgZone } from '@angular/core'
 let L: any = require('/node_modules/leaflet/dist/leaflet.js')
 @Component({
   selector: 'leaflet-component',
-  templateUrl: '/app/map/leaflet-map.component.html'
+  templateUrl: 'leaflet-map.component.html'
 })
 export class LeafletMapComponent {
   private leafletMap: any

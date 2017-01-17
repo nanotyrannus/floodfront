@@ -2,7 +2,7 @@ import { Component } from "@angular/core"
 import { UserService } from "../user/user.service"
 
 @Component({
-    "templateUrl": "/app/login/login.component.html"
+    "templateUrl": "login.component.html"
 })
 export class LoginComponent {
 
