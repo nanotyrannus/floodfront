@@ -54,14 +54,20 @@ export class LeafletMapComponent {
     // console.log("SouthWest",L.latLng(this.bounds[0][0][1], this.bounds[0][0][0])) 
     // console.log("NorthEast", L.latLng(this.bounds[0][2][1], this.bounds[0][2][0]))
     this.leafletMap.setView([this.bounds[0][0][1], this.bounds[0][0][0]])
+
+    // Change this to async
+    this.leafletMap.setView([this.nav.getCurrentPosition().lat, this.nav.getCurrentPosition().lon])
+
     // console.log("this.bounds[0]")
     console.log(this.bounds[0])
+
     this.leafletMap.on('click', event => {
       if (this.primed) {
         this.primed = false
       } else {
         return
       }
+      
       let markerOptions = {
         'draggable': true
       }
@@ -123,7 +129,13 @@ export class LeafletMapComponent {
     }, error => { console.error(error) })
   }
 
+  /**
+   * Create marker on server side.
+   */
   private createMarker(type: string, lat: number, lon: number, heading: number = null, marker: any = null) {
+    marker.on('click', event => {
+      console.log("Marker clicked")
+    })
     this.rest.post(`/marker/${this.eventId}`, {
       "type": type, //ignored on backend
       "lat": lat,
@@ -142,8 +154,12 @@ export class LeafletMapComponent {
       )
   }
 
-  private spawnMarker(latlng: any, type: string = null, oldMarker: any = null) { // Spawn client-side marker
+  // Spawn client-side marker
+  private spawnMarker(latlng: any, type: string = null, oldMarker: any = null) {
     let marker = L.marker(latlng, { "draggable": true })
+    marker.on('click', event => {
+      console.log("Marker clicked", event)
+    })
     if (oldMarker) {
       marker.id = oldMarker.id
       if (oldMarker.heading !== null) {
@@ -173,7 +189,7 @@ export class LeafletMapComponent {
     if (marker.type === MarkerType.DIRECTIONAL) {
       markup += `<div>I'M DIRECTIONAL</div>`
     }
-    marker.bindPopup(markup)
+    marker.bindPopup(markup, { "autoPan": false })
   }
 
   private readUrl(value: any, markerId: number) {
@@ -197,12 +213,12 @@ export class LeafletMapComponent {
   }
 
   private centerMap() {
-      let coords = this.nav.getCurrentPosition()
-      if (coords === null) {
-        return
-      } else {
-        this.leafletMap.setView([coords.lat, coords.lon])
-      }
+    let coords = this.nav.getCurrentPosition()
+    if (coords === null) {
+      return
+    } else {
+      this.leafletMap.setView([coords.lat, coords.lon])
+    }
   }
 
   upload(markerId: number) {

@@ -3,3 +3,4 @@
 /back/node_modules
 /back/.vscode
 /front-old
+/front/app/**/*.js

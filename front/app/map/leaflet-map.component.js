@@ -159,11 +159,11 @@ var LeafletMapComponent = (function () {
         if (type === void 0) { type = MarkerType.DEFAULT; }
         console.log("from bindPopup: " + marker.id);
         var id = marker.id;
-        var markup = "\n        <img id=\"thumbnail-" + marker.id + "\" class=\"thumbnail map-thumbnail\" src=\"http://placehold.it/100x100\">\n        <form enctype=\"multipart/form-data\" action=\"http://localhost:8080/upload\" method=\"POST\">\n        <input type=\"file\" name=\"picture\" accept=\"image/*\" onchange=\"window.leafletComponent.readUrl(this, " + marker.id + ")\">\n        </form>\n        <button class=\"btn btn-default\" onclick=\"window.leafletComponent.upload(" + marker.id + ")\">UPLOAD</button>\n    ";
+        var markup = "\n        <img id=\"thumbnail-" + marker.id + "\" class=\"thumbnail map-thumbnail\" src=\"https://placehold.it/100x100\">\n        <form enctype=\"multipart/form-data\" action=\"https://localhost:8080/upload\" method=\"POST\">\n        <input type=\"file\" name=\"picture\" accept=\"image/*\" onchange=\"window.leafletComponent.readUrl(this, " + marker.id + ")\">\n        </form>\n        <button class=\"btn btn-default\" onclick=\"window.leafletComponent.upload(" + marker.id + ")\">UPLOAD</button>\n    ";
         if (marker.type === MarkerType.DIRECTIONAL) {
             markup += "<div>I'M DIRECTIONAL</div>";
         }
-        marker.bindPopup(markup);
+        marker.bindPopup(markup, { "autoPan": false });
     };
     LeafletMapComponent.prototype.readUrl = function (value, markerId) {
         console.log(value);

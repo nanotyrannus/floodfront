@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
+var common_1 = require("@angular/common");
 var app_component_1 = require("./app.component");
 var router_1 = require("@angular/router");
 var leaflet_map_component_1 = require("./map/leaflet-map.component");
@@ -45,7 +46,9 @@ AppModule = __decorate([
                     path: 'event',
                     component: event_component_1.EventComponent
                 }
-            ]),
+            ], {
+                useHash: true
+            }),
             http_1.HttpModule,
             forms_1.FormsModule
         ],
@@ -61,7 +64,8 @@ AppModule = __decorate([
             user_service_1.UserService,
             event_service_1.EventService,
             cookie_service_1.CookieService,
-            navigation_service_1.NavigationService
+            navigation_service_1.NavigationService,
+            { "provide": common_1.LocationStrategy, "useClass": common_1.HashLocationStrategy }
         ],
         bootstrap: [app_component_1.AppComponent]
     }),

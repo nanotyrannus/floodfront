@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 import { EventService } from './event.service'
 import { RestService } from '../shared/rest.service'
 import { EnvironmentService } from '../shared/environment.service'
+import { NavigationService } from '../shared/navigation.service'
 
 @Component({
   selector: 'event-component',
@@ -25,7 +26,8 @@ export class EventComponent {
         private env: EnvironmentService,
         private rest: RestService,
         private eventService: EventService,
-        private router: Router) {
+        private router: Router,
+        private nav: NavigationService) {
 
     }
 
@@ -37,6 +39,7 @@ export class EventComponent {
         //   console.error(error)
         // })
         this.getEvents()
+        this.nav.track()
     }
 
     getEvents() {
