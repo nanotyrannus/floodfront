@@ -54,9 +54,10 @@ export class LeafletMapComponent {
     // console.log("SouthWest",L.latLng(this.bounds[0][0][1], this.bounds[0][0][0])) 
     // console.log("NorthEast", L.latLng(this.bounds[0][2][1], this.bounds[0][2][0]))
     this.leafletMap.setView([this.bounds[0][0][1], this.bounds[0][0][0]])
+    this.centerMap()
 
     // Change this to async
-    this.leafletMap.setView([this.nav.getCurrentPosition().lat, this.nav.getCurrentPosition().lon])
+    // this.leafletMap.setView([this.nav.getCurrentPosition().lat, this.nav.getCurrentPosition().lon])
 
     // console.log("this.bounds[0]")
     console.log(this.bounds[0])
@@ -213,12 +214,15 @@ export class LeafletMapComponent {
   }
 
   private centerMap() {
-    let coords = this.nav.getCurrentPosition()
-    if (coords === null) {
-      return
-    } else {
-      this.leafletMap.setView([coords.lat, coords.lon])
-    }
+    // let coords = this.nav.getCurrentPosition()
+    // if (coords === null) {
+    //   return
+    // } else {
+    //   this.leafletMap.setView([coords.lat, coords.lon])
+    // }
+    this.nav.getCurrentPosition().subscribe( pos => {
+        this.leafletMap.setView([pos.lat, pos.lon])
+    })
   }
 
   upload(markerId: number) {
