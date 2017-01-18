@@ -4,3 +4,4 @@
 /back/.vscode
 /front-old
 /front/app/**/*.js
+/front/app/**/*.map
