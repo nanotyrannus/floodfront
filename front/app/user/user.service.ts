@@ -24,7 +24,7 @@ export class UserService {
     }
 
     login(email: string): void {
-        this.rest.post("/login", { "email" : email }).subscribe(
+        this.rest.post("/login", { "email": email }).subscribe(
             data => {
                 this.cookieService.set("email", email)
                 console.log(data)
@@ -35,5 +35,10 @@ export class UserService {
 
             }
         )
+    }
+
+    logout(): void {
+        this.cookieService.remove("email")
+        this.router.navigate(["/"])
     }
 }

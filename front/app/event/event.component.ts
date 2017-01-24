@@ -48,6 +48,11 @@ export class EventComponent {
           let events = data.json()
           this.events = events
           console.log(events)
+          /**
+           * Only for demo
+           */
+          let event = this.events[0]
+          this.enterEvent(event.id, event.name, event.bounds)
         }, error => {
           console.error(error)
         }

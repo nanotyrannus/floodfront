@@ -1,7 +1,7 @@
 <div>
     <div class="event-list-container container">
         <div *ngFor="let event of events" class="thumbnail col-xs-12 col-md-6 col-lg-4">
-            <img src="http://placehold.it/350x150">
+            <img src="https://placehold.it/350x150">
             <div class="caption">
                 <h3>{{ event.name }}</h3>
                 <p>{{ event.description }}</p>
@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    <form enctype="multipart/form-data" action="http://localhost:8080/upload" method="POST">
+    <form enctype="multipart/form-data" action="https://localhost:8080/upload" method="POST">
         <input type="file" (change)="readUrl($event)" name="picture" accept="image/*">
         <img src="#" id="test"  onchange="console.log('changed')">
         <!--<input type="submit">-->

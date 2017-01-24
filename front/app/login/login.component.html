@@ -3,22 +3,25 @@
         <div class="row">
             <div class="col-md-12 col-xs-12 col-lg-12">
                 <img src="assets/images/logo.svg" class="logo center-block">
-                <div class="center-block">
+                <div class="text-center">
                     <span class="login-title text-center">Flood Front</span>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="login-container">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="login-container" style="width:100%;">
                     <div class="input-group">
                         <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-envelope"></span>
+                            <span class="glyphicon glyphicon-envelope"></span>
                         </span>
                         <input type="text" (keyup.enter)="login()" class="form-control" placeholder="Email" [(ngModel)]="email">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" [disabled]="buttonState()" (click)="login()">ENTER</button>
+                        </span>
                     </div>
                 </div>
-                <button class="btn btn-default" [disabled]="buttonState()" (click)="login()">ENTER</button>
+
             </div>
         </div>
     </div>

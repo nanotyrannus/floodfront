@@ -18,5 +18,7 @@ CREATE TABLE IF NOT EXISTS marker (
     event_id        INTEGER         REFERENCES event (id) ON DELETE CASCADE,
     heading         FLOAT8          CONSTRAINT degree_range_check CHECK (heading >= 0 AND heading <=360),
     lat             NUMERIC,
-    lon             NUMERIC
+    lon             NUMERIC,
+    error_margin    NUMERIC,
+    created         TIMESTAMP       DEFAULT NOW()
 );

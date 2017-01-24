@@ -4,9 +4,15 @@ import { EventService } from '../event/event.service'
 import { RestService } from '../shared/rest.service'
 import { UserService } from '../user/user.service'
 import { NavigationService } from '../shared/navigation.service'
+import { CookieService } from '../shared/cookie.service'
 import { NgZone } from '@angular/core'
+import { ReplaySubject } from 'rxjs/ReplaySubject'
+
 // import * as L from '/node_modules/leaflet/dist/leaflet.js'
-let L: any = require('/node_modules/leaflet/dist/leaflet.js')
+// let L: any = require('/node_modules/leaflet/dist/leaflet.js')
+declare var L: any
+
+declare var $: any
 @Component({
   selector: 'leaflet-component',
   templateUrl: '/app/map/leaflet-map.component.html'
@@ -16,10 +22,18 @@ export class LeafletMapComponent {
   private primed: boolean = false
   private markerType: MarkerType
   private markers: Marker[]
+  private selectedMarker: any
   private files: Map<any, File> = new Map<any, File>()
   private eventName: string
   private eventId: number
   private bounds: any
+
+  private deviceWidth: number
+  private sliderRadius: number
+  private x: number
+  private y: number
+  private slider: any
+  private sliderDisplay: string = "none"
 
   constructor(
     private router: Router,
@@ -27,6 +41,7 @@ export class LeafletMapComponent {
     private userService: UserService,
     private rest: RestService,
     private nav: NavigationService,
+    private cookie: CookieService,
     private zone: NgZone) { }
   ngOnInit() {
     window['leafletComponent'] = {
@@ -34,6 +49,8 @@ export class LeafletMapComponent {
       "readUrl": (val, id) => this.readUrl(val, id)
     }
     try {
+      this.deviceWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+      this.sliderRadius = Math.ceil(this.deviceWidth / 12)
       this.eventName = this.eventService.eventName
       this.eventId = this.eventService.eventId
       this.bounds = this.eventService.bounds.coordinates
@@ -41,6 +58,30 @@ export class LeafletMapComponent {
       console.error(err)
       this.router.navigate(['/event'])
     }
+
+    this.slider = $("#slider").CircularSlider({
+      "min": 0,
+      "max": 359,
+      "value": 0,
+      "radius": this.sliderRadius,
+      "onSlideEnd": (ui, val) => {
+        let marker = this.selectedMarker
+        console.log(val)
+        marker.setRotationAngle(val)
+        marker.heading = val
+        // On end, update
+        this.updateMarker(marker.id, marker.getLatLng(), val)
+      },
+      "slide": (ui, val) => {
+        if (!this.selectedMarker) {
+          return
+        } else {
+          this.selectedMarker.setRotationAngle(val)
+        }
+      },
+      "animate": false
+    })
+
     console.log(`Getting markers for ${this.eventId}: ${this.eventName}`)
     console.log(this.bounds)
     if (this.eventId == null) {
@@ -48,7 +89,8 @@ export class LeafletMapComponent {
       this.router.navigate(['/event'])
     }
     this.leafletMap = L.map('map', {
-      zoom: 12
+      "zoom": 12,
+      "doubleClickZoom": false
     })
     // this.leafletMap.fitBounds(L.latLng(this.bounds[0][0][1], this.bounds[0][0][0]), L.latLng(this.bounds[0][2][1], this.bounds[0][2][0])) // Bottom left and top right corners of bbox
     // console.log("SouthWest",L.latLng(this.bounds[0][0][1], this.bounds[0][0][0])) 
@@ -62,38 +104,40 @@ export class LeafletMapComponent {
     // console.log("this.bounds[0]")
     console.log(this.bounds[0])
 
+    this.leafletMap.on("dragstart", event => {
+      this.sliderDisplay = "none"
+    })
+
     this.leafletMap.on('click', event => {
+      this.sliderDisplay = "none"
+
       if (this.primed) {
         this.primed = false
       } else {
         return
       }
-      
-      let markerOptions = {
-        'draggable': true
-      }
-      let marker = L.marker(event.latlng, markerOptions)
-      marker.type = this.markerType
-      if (marker.type === MarkerType.DIRECTIONAL) {
-        marker.heading = 0
-      }
-      marker.on('drag', event => {
 
-      })
-      marker.on('dragend', event => {
-        console.log(`dragend:`, event.target._latlng)
-        this.updateMarker(marker.id, event.target._latlng)
-      })
-      this.bindPopup(marker)
+
+      this.spawnMarker(event.latlng)
+
+      // let markerOptions = {
+      //   'draggable': true
+      // }
+      // let marker = L.marker(event.latlng, markerOptions)
+      // marker.type = this.markerType
+      // if (marker.type === MarkerType.DIRECTIONAL) {
+      //   marker.heading = 0
+      // }
+      // marker.on('drag', event => { })
+      // marker.on('dragend', event => {
+      //   console.log(`dragend:`, event.target._latlng)
+      //   this.updateMarker(marker.id, event.target._latlng)
+      // })
+      // this.bindPopup(marker)
       console.log(`placed marker at ${event.latlng.lat}, ${event.latlng.lng}`)
-      this.createMarker("point", event.latlng.lat, event.latlng.lng, (this.markerType === MarkerType.DIRECTIONAL) ? marker.heading : null, marker)
 
-      marker.addTo(this.leafletMap)
+      // marker.addTo(this.leafletMap)
     })
-    //       let map = L.map('map', {
-    //   center: new L.LatLng(40.731253, -73.996139),
-    //   zoom: 12,
-    // })
 
     L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}', {
       // attribution: 'Map data &copy; OpenStreetMap contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -102,11 +146,15 @@ export class LeafletMapComponent {
       accessToken: 'pk.eyJ1IjoibmFub3R5cmFubnVzIiwiYSI6ImNpcnJtMmNubDBpZTN0N25rZmMxaHg4ZHQifQ.vj7pif8Z4BVhbYs55s1tAw'
     }).addTo(this.leafletMap)
 
-
     this.getMarkers()
   }
+
   private gotoEvents(): void {
-    this.router.navigate(['/event'])
+    // this.router.navigate(['/event'])
+    /**
+     * Demo only
+     */
+    this.userService.logout()
   }
   private primeDefaultMarker(): void {
     this.primed = true
@@ -119,7 +167,7 @@ export class LeafletMapComponent {
 
   private getMarkers() {
     this.rest.post(`/marker/${this.eventId}/retrieve`, {
-      "email": this.userService.email
+      "email": this.cookie.get("email")
     }).subscribe(data => {
       let body = data.json()
       body.markers.forEach(marker => {
@@ -130,50 +178,116 @@ export class LeafletMapComponent {
     }, error => { console.error(error) })
   }
 
+  private showSlider(): void {
+    this.sliderDisplay = "block"
+  }
+
+  private hideSlider(): void {
+    this.sliderDisplay = "none"
+  }
+
   /**
    * Create marker on server side.
    */
-  private createMarker(type: string, lat: number, lon: number, heading: number = null, marker: any = null) {
-    marker.on('click', event => {
-      console.log("Marker clicked")
-    })
-    this.rest.post(`/marker/${this.eventId}`, {
-      "type": type, //ignored on backend
+  private createMarker(lat: number, lon: number, marker: any = null) {
+    let payload = {
+      "type": null, //ignored on backend
       "lat": lat,
       "lon": lon,
-      "heading": heading,
-      "email": this.userService.email
-    }).subscribe(
+      "heading": (marker.heading != null) ? marker.heading : null,
+      "accuracy" : this.nav.currentPosition.accuracy || -1,
+      "email": this.cookie.get("email")
+    }
+    console.log("createMarker payload", payload)
+    this.rest.post(`/marker/${this.eventId}`, payload).subscribe(
       data => {
         let body = data.json()
-        console.log()
-        marker.id = body.id
+        // marker.id = body.id
+        marker.idSubject.next(body.id)
       },
       error => {
         console.error(error)
-      }
-      )
+      })
   }
 
   // Spawn client-side marker
-  private spawnMarker(latlng: any, type: string = null, oldMarker: any = null) {
-    let marker = L.marker(latlng, { "draggable": true })
+  // Refactoring to handle server and client-side markers
+  // Don't need to pass markertype since available in scope
+  // bindPopup can be merged into this method
+  private spawnMarker(latlng: any, type: MarkerType = null, oldMarker: any = null) {
+    console.log(`spawnMarker called with ${latlng}`)
+    let marker = L.marker(latlng, { "draggable": true, "rotationOrigin": "center" })
+
+    var delay = 250
+    marker.clickCount = 0
     marker.on('click', event => {
-      console.log("Marker clicked", event)
+      // Implement double click
+      // console.log("Marker clicked", event)
+      this.selectedMarker = marker
+      marker.clickCount += 1
+      if (marker.clickCount === 2) {
+        console.log("Double click detected.")
+        this.sliderDisplay = "block"
+        this.x = (event.originalEvent.clientX - this.sliderRadius - 20)
+        this.y = (event.originalEvent.clientY - this.sliderRadius - 20)
+
+      }
+      setTimeout(() => {
+        if (marker.clickCount === 1) {
+          console.log("Single click detected")
+        }
+        marker.clickCount = 0
+      }, delay)
     })
-    if (oldMarker) {
+    marker.on("contextmenu", event => {
+      console.log("Context menu event", event)
+      this.selectedMarker = marker
+      this.sliderDisplay = "block"
+      this.x = (event.originalEvent.clientX - this.sliderRadius - 20)
+      this.y = (event.originalEvent.clientY - this.sliderRadius - 20)
+    })
+
+    if (oldMarker) { // Markers from server are not typed
       marker.id = oldMarker.id
       if (oldMarker.heading !== null) {
         marker.type = MarkerType.DIRECTIONAL
+        marker.setIcon(
+          L.icon({
+            "iconUrl": "assets/images/arrow.svg",
+            "iconSize": [40, 40]
+          })
+        )
         marker.heading = oldMarker.heading
+        marker.setRotationAngle(marker.heading)
+      } else {
+        marker.type = MarkerType.DEFAULT
       }
       console.log(`Marker of id ${oldMarker.id} retrieved`)
-      this.bindPopup(marker)
+    } else {
+      // Newly created marker
+      marker.type = this.markerType
+      if (marker.type === MarkerType.DIRECTIONAL) {
+        marker.heading = 0
+        marker.setIcon(
+          L.icon({
+            "iconUrl": "assets/images/arrow.svg",
+            "iconSize": [40, 40]
+          })
+        )
+        // After rotation plugin install, set rotation here
+      }
+      marker.idSubject = new ReplaySubject(1)
+      marker.idSubject.subscribe(id => {
+        marker.id = id
+      })
+      this.createMarker(latlng.lat, latlng.lng, marker)
     }
+
     marker.on('dragend', e => {
       this.updateMarker(marker.id, e.target._latlng)
     })
 
+    this.bindPopup(marker)
     marker.addTo(this.leafletMap)
   }
 
@@ -204,29 +318,27 @@ export class LeafletMapComponent {
     this.files.set(markerId, value.files[0])
   }
 
-  private updateMarker(id: number, latlng: any) {
+  private updateMarker(id: number, latlng: any, heading: number = null) {
+    console.log(`updateMarker called with ${id} ${heading}`, latlng)
     this.rest.post(`/marker/${id}/update`, {
       "lat": latlng.lat,
-      "lon": latlng.lng
+      "lon": latlng.lng,
+      "heading": heading
     }).subscribe(data => {
       console.log(`marker update`, data)
     }, error => { console.error(error) })
   }
 
   private centerMap() {
-    // let coords = this.nav.getCurrentPosition()
-    // if (coords === null) {
-    //   return
-    // } else {
-    //   this.leafletMap.setView([coords.lat, coords.lon])
-    // }
-    this.nav.getCurrentPosition().subscribe( pos => {
-        this.leafletMap.setView([pos.lat, pos.lon])
+    // Turn this into one-time execution using AsyncSubject
+
+    this.nav.getCurrentPosition().subscribe(pos => {
+      this.leafletMap.setView([pos.lat, pos.lon])
     })
+
   }
 
   upload(markerId: number) {
-    console.log(`Test called: ${markerId}`)
     let formData = new FormData()
     formData.append("image", this.files.get(markerId))
     formData.append("marker_id", markerId)
