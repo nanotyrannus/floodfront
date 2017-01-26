@@ -1,3 +1,5 @@
+/* CREATE TYPE marker_type AS ENUM ('DEFAULT', 'DIRECTIONAL', 'WALKABLE', 'BORDER', 'FLOOD'); */
+
 CREATE TABLE IF NOT EXISTS app_user (
     id                              SERIAL UNIQUE,
     email           TEXT            NOT NULL UNIQUE,
@@ -20,5 +22,6 @@ CREATE TABLE IF NOT EXISTS marker (
     lat             NUMERIC,
     lon             NUMERIC,
     error_margin    NUMERIC,
-    created         TIMESTAMP       DEFAULT NOW()
+    created         TIMESTAMP       DEFAULT NOW(),
+    marker_type     marker_type     DEFAULT 'DEFAULT'
 );

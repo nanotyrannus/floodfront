@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router'
 import { LeafletMapComponent } from './map/leaflet-map.component'
 import { LoginComponent } from './login/login.component'
 import { EventComponent } from './event/event.component'
+import { PopupComponent } from './map/popup.component'
+import { MarkerMenuComponent } from './map/marker-menu.component'
 import { RestService } from './shared/rest.service'
 import { CookieService } from './shared/cookie.service'
 import { NavigationService } from './shared/navigation.service'
@@ -40,9 +42,11 @@ import { EventService } from './event/event.service'
     ],
     declarations: [
         AppComponent,
+        MarkerMenuComponent,
         LeafletMapComponent,
         EventComponent,
-        LoginComponent
+        LoginComponent,
+        PopupComponent,
     ],
     providers: [
         EnvironmentService,
