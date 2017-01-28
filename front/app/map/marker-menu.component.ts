@@ -1,6 +1,11 @@
 import { Component, EventEmitter, Output } from "@angular/core"
 import { MarkerType } from "./marker.enum"
 
+/**
+ * Was a menu to choose marker type,
+ * repurposed into info bubble.
+ */
+
 @Component({
     "selector" : "marker-menu",
     "templateUrl" : "/app/map/marker-menu.component.html",
@@ -31,6 +36,7 @@ import { MarkerType } from "./marker.enum"
 export class MarkerMenuComponent {
 
     private isVisible: boolean = false
+    private visibility: string = "hidden"
     private markerType = MarkerType
     private className: string = "marker-menu-container-hidden"
     @Output() onMarkerPicked = new EventEmitter<MarkerType>()
@@ -47,6 +53,16 @@ export class MarkerMenuComponent {
      */
     public close() {
         this.className = "marker-menu-container-hidden"
+    }
+
+    public toggle() {
+        if (this.isVisible) {
+            this.visibility = "hidden"
+        } else {
+            this.visibility = "visible"
+        }
+
+        this.isVisible = !this.isVisible
     }
 
     /**

@@ -23,6 +23,7 @@ declare var $: any
 export class LeafletMapComponent {
   private leafletMap: any
   private primed: boolean = false
+  private markerTypeRef = MarkerType
   private markerType: MarkerType
   private markers: Marker[]
   private selectedMarker: any
@@ -272,15 +273,21 @@ export class LeafletMapComponent {
     marker.on("contextmenu", event => {
       console.log(`contextmenu event from ${marker.id}`, event)
       event.originalEvent.preventDefault()
-      this.selectedMarker = marker
-      this.popup.setMarker(this.selectedMarker)
+      this.leafletMap.removeLayer(marker)
+      this.rest.post(`/marker/${marker.id}/delete`, {}).subscribe(
+        data => {
+          console.log(data.json())
+        }
+      )
+      // this.selectedMarker = marker
+      // this.popup.setMarker(this.selectedMarker)
       // this.sliderDisplay = "block"
       // this.x = (event.originalEvent.clientX - this.sliderRadius - 20)
       // this.y = (event.originalEvent.clientY - this.sliderRadius - 20)
-      this.zone.run(() => {
-        this.popup.setCoords(event.originalEvent.clientX, event.originalEvent.clientY)
-        this.popup.show()
-      })
+      // this.zone.run(() => {
+      //   this.popup.setCoords(event.originalEvent.clientX, event.originalEvent.clientY)
+      //   this.popup.show()
+      // })
 
       // return false
     })
@@ -317,6 +324,7 @@ export class LeafletMapComponent {
       marker.idSubject = new ReplaySubject(1)
       marker.idSubject.subscribe(id => {
         marker.id = id
+        this.bindPopup(marker)
       })
       this.createMarker(latlng.lat, latlng.lng, marker, marker.marker_type)
     }
@@ -327,25 +335,27 @@ export class LeafletMapComponent {
       marker.setIcon(
         L.icon({
           "iconUrl": "assets/images/marker_walkable.svg",
-          "iconSize": [40, 40]
+          "iconSize": [25, 25]
         })
       )
     } else if (referenceMarker.marker_type === MarkerType[MarkerType.BORDER]) {
       marker.setIcon(
         L.icon({
           "iconUrl": "assets/images/marker_border.svg",
-          "iconSize": [40, 40]
+          "iconSize": [25, 25]
         })
       )
     } else if (referenceMarker.marker_type === MarkerType[MarkerType.FLOOD]) {
       marker.setIcon(
         L.icon({
           "iconUrl": "assets/images/marker_flood.svg",
-          "iconSize": [40, 40]
+          "iconSize": [25, 25]
         })
       )
+    } else {
+      console.warn(`Marker type: ${referenceMarker.marker_type}`)
     }
-    console.warn(`Marker type: ${marker.marker_type}`)
+    
     marker.on('dragend', e => {
       this.updateMarker(marker.id, e.target._latlng)
     })
@@ -356,17 +366,18 @@ export class LeafletMapComponent {
 
   private bindPopup(marker: any, type: MarkerType = MarkerType.DEFAULT) {
     console.log(`from bindPopup: ${marker.id}`)
+    marker.unbindPopup()
     let id = marker.id
     let markup = `
-        <img id="thumbnail-${marker.id}" class="thumbnail map-thumbnail" src="https://placehold.it/100x100">
+        <img id="thumbnail-${marker.id}" class="thumbnail map-thumbnail" src="/uploads/${marker.id}.jpg">
         <form enctype="multipart/form-data" action="https://localhost:8080/upload" method="POST">
         <input type="file" name="picture" accept="image/*" onchange="window.leafletComponent.readUrl(this, ${marker.id})">
         </form>
         <button class="btn btn-default" onclick="window.leafletComponent.upload(${marker.id})">UPLOAD</button>
     `
-    if (marker.type === MarkerType.DIRECTIONAL) {
-      markup += `<div>I'M DIRECTIONAL</div>`
-    }
+    // if (marker.type === MarkerType.DIRECTIONAL) {
+    //   markup += `<div>I'M DIRECTIONAL</div>`
+    // }
     marker.bindPopup(markup, { "autoPan": false })
   }
 
@@ -422,8 +433,8 @@ export class LeafletMapComponent {
     this.primed = false
   }
 
-  private openMarkerMenu() {
-    this.markerMenu.open()
+  private toggleInfo() {
+    this.markerMenu.toggle()
   }
 
   private onMarkerPicked(type: MarkerType) {
@@ -437,6 +448,9 @@ export class LeafletMapComponent {
     let xhr = new XMLHttpRequest()
     xhr.open("POST", `${window.location.protocol}//${window.location.hostname}:8080/upload`)
     xhr.send(formData)
+    xhr.addEventListener("loadend", () => {
+      this.selectedMarker.closePopup()
+    })
   }
 }
 

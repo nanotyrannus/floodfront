@@ -78,7 +78,7 @@ userRouter
         let result = (yield query(`
             SELECT *
             FROM marker
-            WHERE user_id=$1 AND event_id=$2
+            WHERE user_id=$1 AND event_id=$2 AND created >= now()::date
         `, [userId, eventId])).rows
         this.body = {
             "markers": result
@@ -93,7 +93,7 @@ userRouter
             FROM app_user
             WHERE email=$1
         `, [req.email])).rows[0].id
-        
+
         console.log(`create marker`, req)
         let result = yield query(`
             INSERT INTO marker (user_id, event_id, lon, lat, heading, marker_type, error_margin)
@@ -126,8 +126,15 @@ userRouter
         }
         this.body = { "message": `Marker ${this.params.markerId} updated.` }
     })
-    .delete("/marker/markerId", function* () { // Delete marker
-
+    .post("/marker/:markerId/delete", function* () { // Delete marker
+        let result = yield query(`
+            DELETE FROM marker
+            WHERE id=$1
+        `, [this.params.markerId])
+        this.body = {
+            "message" : `Deleted ${ this.params.markerId }`
+        }
+        console.log(`delete marker ${ this.params.markerId } called`,result)
     })
     .post("/upload", body(), function* (next) {
         console.log(this.request.fields)

@@ -46,7 +46,7 @@ co.wrap(function* () {
             fs.accessSync(`${config.appRoot}${this.path}`, fs.constants.F_OK)
             yield send(this, `${ this.path }`, { "root" : config.appRoot })
         } catch (e) {
-            console.log(`${this.path} file not found.`)
+            console.log(`${config.appRoot}${this.path} file not found.`)
             yield next
         }
     }

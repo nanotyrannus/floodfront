@@ -32,16 +32,17 @@ background: linear-gradient(to left, #4b6cb7 , #182848); /* W3C, IE 10+/ Edge, F
 /* Overriding leaflet class */
 .leaflet-control-zoom {
     position: fixed !important;
-    bottom: 15%;
+    bottom: 20%;
     right: 3%;
 }
 
 .map-button {
     height: 3em;
-    width: 4em;
+    width: 3em;
     background-color: #02a4d3;
     color: #FFFFFF;
     border: none;
+    background-color: #d3d3d3;
 }
 
 .map-button:active {
@@ -75,6 +76,21 @@ background: linear-gradient(to left, #4b6cb7 , #182848); /* W3C, IE 10+/ Edge, F
     align-items: center;
 }
 
+.marker-menu-container {
+    position: fixed;
+    background-color: white;
+    right: 0;
+    left: 0;
+    top: 40%;
+    margin-right: auto;
+    margin-left: auto;
+    width: 75%;
+    height: 30%;
+    z-index:402;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    padding: 5%;
+}
+
 .login-title {
     color: white;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
@@ -90,11 +106,21 @@ background: linear-gradient(to left, #4b6cb7 , #182848); /* W3C, IE 10+/ Edge, F
 }
 
 .logo {
-    width: 250px;
-    height: 250px;
+    width: 20%;
+    margin-left: 3%;
+    margin-right: 3%;
+    /*height: 250px;*/
 }
 
 .login-container {}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
 
 .footer {
     box-sizing: border-box;
