@@ -254,7 +254,7 @@ export class LeafletMapComponent {
       // Implement double click
       // console.log("Marker clicked", event)
       this.selectedMarker = marker
-      this.popup.setMarker(this.selectedMarker)
+      // this.popup.setMarker(this.selectedMarker)
       marker.clickCount += 1
       if (marker.clickCount === 2) {
         console.log("Double click detected.")
@@ -269,6 +269,15 @@ export class LeafletMapComponent {
         }
         marker.clickCount = 0
       }, delay)
+
+      setTimeout(() => {
+        // Wait one tick for popup to render
+        $(":file").filestyle({
+          iconName : "glyphicon glyphicon-camera", 
+          input : false,
+          buttonText : "Take photo"
+        }) 
+      }, 0)
     })
     marker.on("contextmenu", event => {
       console.log(`contextmenu event from ${marker.id}`, event)
@@ -371,9 +380,9 @@ export class LeafletMapComponent {
     let markup = `
         <img id="thumbnail-${marker.id}" class="thumbnail map-thumbnail" src="/uploads/${marker.id}.jpg">
         <form enctype="multipart/form-data" action="https://localhost:8080/upload" method="POST">
-        <input type="file" name="picture" accept="image/*" onchange="window.leafletComponent.readUrl(this, ${marker.id})">
+        <input class="filestyle" data-iconName="glyphicon glyphicon-camera" type="file" name="picture" accept="image/*" onchange="window.leafletComponent.readUrl(this, ${marker.id})">
         </form>
-        <button class="btn btn-default" onclick="window.leafletComponent.upload(${marker.id})">UPLOAD</button>
+        <!-- <button class="btn btn-default" onclick="window.leafletComponent.upload(${marker.id})">UPLOAD</button> -->
     `
     // if (marker.type === MarkerType.DIRECTIONAL) {
     //   markup += `<div>I'M DIRECTIONAL</div>`
@@ -390,6 +399,7 @@ export class LeafletMapComponent {
     }
     reader.readAsDataURL(value.files[0])
     this.files.set(markerId, value.files[0])
+    this.upload(markerId)
   }
 
   private updateMarker(id: number, latlng: any, heading: number = null) {

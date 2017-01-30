@@ -1,11 +1,33 @@
 from lxml import etree
 import pg8000 as pg
+import argparse
+import re
 
 def main():
+    """
+    Main function
+    """
+
+    parser = argparse.ArgumentParser(description=""" Export FloodFront marker data into KML format. """)
+    parser.add_argument('--after', type=str, help=""" Narrow selection to markers after this date. YYYY-MM-DD """)
+    parser.add_argument('-o', '--output', type=str, help=""" File output name. """)
+
+    args = parser.parse_args()
+    if (re.search("^[0-9]{4}-[0-9]{2}-[0-9]{2}$", args.after) is None) and (args.after is not None):
+        raise ValueError("Invalid date entered {0}. Date must be YYYY-MM-DD".format(args.after))
+
     conn = pg.connect(user="ryan", database="floodfront")
     cursor = conn.cursor()
-    cursor.execute(("select marker.id, email, lat, lon, error_margin, created, marker_type from marker full outer join app_user on marker.user_id=app_user.id"))
+    query = """ SELECT marker.id, email, lat, lon, error_margin, created, marker_type
+            FROM marker 
+            FULL OUTER JOIN app_user 
+            ON marker.user_id=app_user.id """
+    
+    if args.after is not None:
+        print "Searching for date {0}".format(args.after)
+        query = query + "WHERE created >= '{0}'".format(args.after)
 
+    cursor.execute(query)
     result = cursor.fetchall()
 
     #0 markerId
@@ -49,13 +71,16 @@ def main():
             error_margin_value.text = "-1"
         timestamp = etree.SubElement(extended_data, "Data", name="obsTime")
         timestamp_value = etree.SubElement(timestamp, "value")
-        timestamp_value.text = row[5].utcnow().strftime("%Y%m%d %H%M%S")
+        timestamp_value.text = row[5].strftime("%Y%m%d %H%M%S")
         marker_type = etree.SubElement(extended_data, "Data", name="markerType")
         marker_type_value = etree.SubElement(marker_type, "value")
         marker_type_value.text = type_to_class(row[6])
         
+    file_name = "markers.kml"
+    if args.output is not None:
+        file_name = args.output + ".kml"
 
-    out_file = open("markers.kml", 'w')
+    out_file = open(file_name, 'w')
     out_file.write(etree.tostring(root, pretty_print=True, xml_declaration=True))
     out_file.close()
 

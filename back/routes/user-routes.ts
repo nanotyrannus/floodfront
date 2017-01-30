@@ -142,7 +142,7 @@ userRouter
         console.log(this.request.files[0].path)
         let file = fs.copySync(this.request.files[0].path, `${config.appRoot}/uploads/${this.request.fields.marker_id}.jpg`)
         console.log(this.request.body)
-        this.body = "hey"
+        this.body = `Upload received for marker ${ this.request.fields.marker_id }`
         yield next
     })
     .get("/chain/:value", function* (next) {
