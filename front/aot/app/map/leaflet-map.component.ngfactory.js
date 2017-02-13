@@ -33,7 +33,9 @@ import * as import16 from '../../../app/map/popup.component';
 import * as import17 from './popup.component.ngfactory';
 import * as import18 from '../../../app/map/marker-menu.component';
 import * as import19 from './marker-menu.component.ngfactory';
-import * as import20 from '@angular/core/src/linker/element_ref';
+import * as import20 from '../../../app/map/marker-note.component';
+import * as import21 from './marker-note.component.ngfactory';
+import * as import22 from '@angular/core/src/linker/element_ref';
 var Wrapper_LeafletMapComponent = (function () {
     function Wrapper_LeafletMapComponent(p0, p1, p2, p3, p4, p5, p6) {
         this._changed = false;
@@ -109,6 +111,7 @@ var View_LeafletMapComponent0 = (function (_super) {
         var parentRenderNode = this.renderer.createViewRoot(this.parentElement);
         this._viewQuery_PopupComponent_0 = new import15.QueryList();
         this._viewQuery_MarkerMenuComponent_1 = new import15.QueryList();
+        this._viewQuery_MarkerNoteComponent_2 = new import15.QueryList();
         this._el_0 = import3.createRenderElement(this.renderer, parentRenderNode, 'div', new import3.InlineArray2(2, 'class', 'map-context-menu'), null);
         this._text_1 = this.renderer.createText(this._el_0, '\n\n', null);
         this._text_2 = this.renderer.createText(parentRenderNode, '\n', null);
@@ -149,13 +152,18 @@ var View_LeafletMapComponent0 = (function (_super) {
         this._text_37 = this.renderer.createText(parentRenderNode, '\n', null);
         this._el_38 = import3.createRenderElement(this.renderer, parentRenderNode, 'popup', import3.EMPTY_INLINE_ARRAY, null);
         this.compView_38 = new import17.View_PopupComponent0(this.viewUtils, this, 38, this._el_38);
-        this._PopupComponent_38_3 = new import17.Wrapper_PopupComponent(new import20.ElementRef(this._el_38));
+        this._PopupComponent_38_3 = new import17.Wrapper_PopupComponent(new import22.ElementRef(this._el_38));
         this.compView_38.create(this._PopupComponent_38_3.context);
         this._text_39 = this.renderer.createText(parentRenderNode, '\n', null);
         this._el_40 = import3.createRenderElement(this.renderer, parentRenderNode, 'marker-menu', import3.EMPTY_INLINE_ARRAY, null);
         this.compView_40 = new import19.View_MarkerMenuComponent0(this.viewUtils, this, 40, this._el_40);
         this._MarkerMenuComponent_40_3 = new import19.Wrapper_MarkerMenuComponent();
         this.compView_40.create(this._MarkerMenuComponent_40_3.context);
+        this._text_41 = this.renderer.createText(parentRenderNode, '\n', null);
+        this._el_42 = import3.createRenderElement(this.renderer, parentRenderNode, 'marker-note', import3.EMPTY_INLINE_ARRAY, null);
+        this.compView_42 = new import21.View_MarkerNoteComponent0(this.viewUtils, this, 42, this._el_42);
+        this._MarkerNoteComponent_42_3 = new import21.Wrapper_MarkerNoteComponent(this.parentView.injectorGet(import11.RestService, this.parentIndex));
+        this.compView_42.create(this._MarkerNoteComponent_42_3.context);
         var disposable_0 = import3.subscribeToRenderElement(this, this._el_5, new import3.InlineArray2(2, 'click', null), this.eventHandler(this.handleEvent_5));
         var disposable_1 = import3.subscribeToRenderElement(this, this._el_8, new import3.InlineArray2(2, 'click', null), this.eventHandler(this.handleEvent_8));
         var disposable_2 = import3.subscribeToRenderElement(this, this._el_11, new import3.InlineArray2(2, 'click', null), this.eventHandler(this.handleEvent_11));
@@ -168,6 +176,8 @@ var View_LeafletMapComponent0 = (function (_super) {
         this.context.popup = this._viewQuery_PopupComponent_0.first;
         this._viewQuery_MarkerMenuComponent_1.reset([this._MarkerMenuComponent_40_3.context]);
         this.context.markerMenu = this._viewQuery_MarkerMenuComponent_1.first;
+        this._viewQuery_MarkerNoteComponent_2.reset([this._MarkerNoteComponent_42_3.context]);
+        this.context.markerNote = this._viewQuery_MarkerNoteComponent_2.first;
         this.init(null, (this.renderer.directRenderer ? null : [
             this._el_0,
             this._text_1,
@@ -209,7 +219,9 @@ var View_LeafletMapComponent0 = (function (_super) {
             this._text_37,
             this._el_38,
             this._text_39,
-            this._el_40
+            this._el_40,
+            this._text_41,
+            this._el_42
         ]), [
             disposable_0,
             disposable_1,
@@ -228,6 +240,9 @@ var View_LeafletMapComponent0 = (function (_super) {
         if (((token === import18.MarkerMenuComponent) && (40 === requestNodeIndex))) {
             return this._MarkerMenuComponent_40_3.context;
         }
+        if (((token === import20.MarkerNoteComponent) && (42 === requestNodeIndex))) {
+            return this._MarkerNoteComponent_42_3.context;
+        }
         return notFoundResult;
     };
     View_LeafletMapComponent0.prototype.detectChangesInternal = function (throwOnChange) {
@@ -237,12 +252,15 @@ var View_LeafletMapComponent0 = (function (_super) {
         this._PopupComponent_38_3.check_y(currVal_38_0_1, throwOnChange, false);
         this._PopupComponent_38_3.ngDoCheck(this, this._el_38, throwOnChange);
         this._MarkerMenuComponent_40_3.ngDoCheck(this, this._el_40, throwOnChange);
+        this._MarkerNoteComponent_42_3.ngDoCheck(this, this._el_42, throwOnChange);
         this.compView_38.internalDetectChanges(throwOnChange);
         this.compView_40.internalDetectChanges(throwOnChange);
+        this.compView_42.internalDetectChanges(throwOnChange);
     };
     View_LeafletMapComponent0.prototype.destroyInternal = function () {
         this.compView_38.destroy();
         this.compView_40.destroy();
+        this.compView_42.destroy();
         this._MarkerMenuComponent_40_3.ngOnDestroy();
     };
     View_LeafletMapComponent0.prototype.handleEvent_5 = function (eventName, $event) {

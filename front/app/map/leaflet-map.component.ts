@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { PopupComponent } from "./popup.component"
 import { MarkerMenuComponent } from "./marker-menu.component"
+import { MarkerNoteComponent } from "./marker-note.component"
 import { Router } from '@angular/router'
 import { EventService } from '../event/event.service'
 import { RestService } from '../shared/rest.service'
@@ -49,6 +50,9 @@ export class LeafletMapComponent {
   @ViewChild(MarkerMenuComponent)
   public markerMenu: MarkerMenuComponent
 
+  @ViewChild(MarkerNoteComponent)
+  public markerNote: MarkerNoteComponent
+
   constructor(
     public router: Router,
     public eventService: EventService,
@@ -60,7 +64,16 @@ export class LeafletMapComponent {
   ngOnInit() {
     window['leafletComponent'] = {
       "upload": (id) => this.upload(id),
-      "readUrl": (val, id) => this.readUrl(val, id)
+      "openNote": () => {
+        this.markerNote.open(this.selectedMarker.id)
+      },
+      "closeNote": () => {
+        this.markerNote.close()
+      },
+      "readUrl": (val, id) => this.readUrl(val, id),
+      "deleteMarker" : () => {
+        this.deleteMarker(this.selectedMarker)
+      }
     }
     try {
       this.deviceWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
@@ -107,7 +120,7 @@ export class LeafletMapComponent {
     }
     this.leafletMap = L.map('map', {
       "zoom": 18,
-      "center" : [0, 0],
+      "center": [0, 0],
       "doubleClickZoom": false
     })
     // this.leafletMap.fitBounds(L.latLng(this.bounds[0][0][1], this.bounds[0][0][0]), L.latLng(this.bounds[0][2][1], this.bounds[0][2][0])) // Bottom left and top right corners of bbox
@@ -274,23 +287,20 @@ export class LeafletMapComponent {
       setTimeout(() => {
         // Wait one tick for popup to render
         $(":file").filestyle({
-          iconName : "glyphicon glyphicon-camera", 
-          input : false,
-          buttonText : "Photo"
-        }) 
+          iconName: "glyphicon glyphicon-camera",
+          input: false,
+          buttonText: "Photo"
+        })
         $("div.bootstrap-filestyle.input-group").css("width", "100%")
         $("label.btn.btn-default").css("width", "100%")
       }, 0)
     })
     marker.on("contextmenu", event => {
       console.log(`contextmenu event from ${marker.id}`, event)
+      this.selectedMarker = marker
       event.originalEvent.preventDefault()
-      this.leafletMap.removeLayer(marker)
-      this.rest.post(`/marker/${marker.id}/delete`, {}).subscribe(
-        data => {
-          console.log(data.json())
-        }
-      )
+      this.deleteMarker(marker)
+
       // this.selectedMarker = marker
       // this.popup.setMarker(this.selectedMarker)
       // this.sliderDisplay = "block"
@@ -367,7 +377,7 @@ export class LeafletMapComponent {
     } else {
       console.warn(`Marker type: ${referenceMarker.marker_type}`)
     }
-    
+
     marker.on('dragend', e => {
       this.updateMarker(marker.id, e.target._latlng)
     })
@@ -385,8 +395,8 @@ export class LeafletMapComponent {
         <form enctype="multipart/form-data" action="https://localhost:8080/upload" method="POST">
         <input style="display: inline;" class="filestyle" data-iconName="glyphicon glyphicon-camera" type="file" name="picture" accept="image/*" onchange="window.leafletComponent.readUrl(this, ${marker.id})">
         </form>
-        <button class="btn btn-default context-btn">Note</button>
-        <button class="btn btn-default context-btn">Delete</button>
+        <button class="btn btn-default context-btn" onclick="window.leafletComponent.openNote()">Note</button>
+        <button class="btn btn-default context-btn" onclick="window.leafletComponent.deleteMarker()">Delete</button>
         <!-- <button class="btn btn-default" onclick="window.leafletComponent.upload(${marker.id})">UPLOAD</button> -->
     `
     // if (marker.type === MarkerType.DIRECTIONAL) {
@@ -446,6 +456,18 @@ export class LeafletMapComponent {
   public markerPlaced() {
     this.markerType = null
     this.primed = false
+  }
+
+  public deleteMarker(marker: any) {
+    let res = window.confirm("Delete marker?")
+    if (res) {
+      this.leafletMap.removeLayer(marker)
+      this.rest.post(`/marker/${marker.id}/delete`, {}).subscribe(
+        data => {
+          console.log(data.json())
+        }
+      )
+    }
   }
 
   public toggleInfo() {

@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component, ViewChild } from '@angular/core';
 import { PopupComponent } from "./popup.component";
 import { MarkerMenuComponent } from "./marker-menu.component";
+import { MarkerNoteComponent } from "./marker-note.component";
 import { Router } from '@angular/router';
 import { EventService } from '../event/event.service';
 import { RestService } from '../shared/rest.service';
@@ -38,7 +39,16 @@ var LeafletMapComponent = (function () {
         var _this = this;
         window['leafletComponent'] = {
             "upload": function (id) { return _this.upload(id); },
-            "readUrl": function (val, id) { return _this.readUrl(val, id); }
+            "openNote": function () {
+                _this.markerNote.open(_this.selectedMarker.id);
+            },
+            "closeNote": function () {
+                _this.markerNote.close();
+            },
+            "readUrl": function (val, id) { return _this.readUrl(val, id); },
+            "deleteMarker": function () {
+                _this.deleteMarker(_this.selectedMarker);
+            }
         };
         try {
             this.deviceWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
@@ -237,11 +247,9 @@ var LeafletMapComponent = (function () {
         });
         marker.on("contextmenu", function (event) {
             console.log("contextmenu event from " + marker.id, event);
+            _this.selectedMarker = marker;
             event.originalEvent.preventDefault();
-            _this.leafletMap.removeLayer(marker);
-            _this.rest.post("/marker/" + marker.id + "/delete", {}).subscribe(function (data) {
-                console.log(data.json());
-            });
+            _this.deleteMarker(marker);
             // this.selectedMarker = marker
             // this.popup.setMarker(this.selectedMarker)
             // this.sliderDisplay = "block"
@@ -320,7 +328,7 @@ var LeafletMapComponent = (function () {
         console.log("from bindPopup: " + marker.id);
         marker.unbindPopup();
         var id = marker.id;
-        var markup = "\n        <img id=\"thumbnail-" + marker.id + "\" class=\"thumbnail map-thumbnail\" src=\"/uploads/" + marker.id + ".jpg\">\n        <form enctype=\"multipart/form-data\" action=\"https://localhost:8080/upload\" method=\"POST\">\n        <input style=\"display: inline;\" class=\"filestyle\" data-iconName=\"glyphicon glyphicon-camera\" type=\"file\" name=\"picture\" accept=\"image/*\" onchange=\"window.leafletComponent.readUrl(this, " + marker.id + ")\">\n        </form>\n        <button class=\"btn btn-default context-btn\">Note</button>\n        <button class=\"btn btn-default context-btn\">Delete</button>\n        <!-- <button class=\"btn btn-default\" onclick=\"window.leafletComponent.upload(" + marker.id + ")\">UPLOAD</button> -->\n    ";
+        var markup = "\n        <img id=\"thumbnail-" + marker.id + "\" class=\"thumbnail map-thumbnail\" src=\"/uploads/" + marker.id + ".jpg\">\n        <form enctype=\"multipart/form-data\" action=\"https://localhost:8080/upload\" method=\"POST\">\n        <input style=\"display: inline;\" class=\"filestyle\" data-iconName=\"glyphicon glyphicon-camera\" type=\"file\" name=\"picture\" accept=\"image/*\" onchange=\"window.leafletComponent.readUrl(this, " + marker.id + ")\">\n        </form>\n        <button class=\"btn btn-default context-btn\" onclick=\"window.leafletComponent.openNote()\">Note</button>\n        <button class=\"btn btn-default context-btn\" onclick=\"window.leafletComponent.deleteMarker()\">Delete</button>\n        <!-- <button class=\"btn btn-default\" onclick=\"window.leafletComponent.upload(" + marker.id + ")\">UPLOAD</button> -->\n    ";
         // if (marker.type === MarkerType.DIRECTIONAL) {
         //   markup += `<div>I'M DIRECTIONAL</div>`
         // }
@@ -374,6 +382,15 @@ var LeafletMapComponent = (function () {
         this.markerType = null;
         this.primed = false;
     };
+    LeafletMapComponent.prototype.deleteMarker = function (marker) {
+        var res = window.confirm("Delete marker?");
+        if (res) {
+            this.leafletMap.removeLayer(marker);
+            this.rest.post("/marker/" + marker.id + "/delete", {}).subscribe(function (data) {
+                console.log(data.json());
+            });
+        }
+    };
     LeafletMapComponent.prototype.toggleInfo = function () {
         this.markerMenu.toggle();
     };
@@ -402,6 +419,10 @@ __decorate([
     ViewChild(MarkerMenuComponent),
     __metadata("design:type", MarkerMenuComponent)
 ], LeafletMapComponent.prototype, "markerMenu", void 0);
+__decorate([
+    ViewChild(MarkerNoteComponent),
+    __metadata("design:type", MarkerNoteComponent)
+], LeafletMapComponent.prototype, "markerNote", void 0);
 LeafletMapComponent = __decorate([
     Component({
         selector: 'leaflet-component',

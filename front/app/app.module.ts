@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component'
 import { EventComponent } from './event/event.component'
 import { PopupComponent } from './map/popup.component'
 import { MarkerMenuComponent } from './map/marker-menu.component'
+import { MarkerNoteComponent } from './map/marker-note.component'
 import { RestService } from './shared/rest.service'
 import { CookieService } from './shared/cookie.service'
 import { NavigationService } from './shared/navigation.service'
@@ -47,6 +48,7 @@ import { EventService } from './event/event.service'
         EventComponent,
         LoginComponent,
         PopupComponent,
+        MarkerNoteComponent
     ],
     providers: [
         EnvironmentService,

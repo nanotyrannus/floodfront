@@ -76,6 +76,20 @@ background: linear-gradient(to left, #4b6cb7 , #182848); /* W3C, IE 10+/ Edge, F
     margin: 2%;
 }
 
+.marker-note-container {
+    z-index: 402;
+    width: 80%;
+    height: 50%;
+    position: fixed;
+    background-color: white;
+    right: 0;
+    left: 0;
+    top: 25%;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 1%;
+}
+
 .marker-menu-text {
     display: table-cell;
     align-items: center;

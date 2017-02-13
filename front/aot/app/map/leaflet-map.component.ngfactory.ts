@@ -25,7 +25,9 @@ import * as import16 from '../../../app/map/popup.component';
 import * as import17 from './popup.component.ngfactory';
 import * as import18 from '../../../app/map/marker-menu.component';
 import * as import19 from './marker-menu.component.ngfactory';
-import * as import20 from '@angular/core/src/linker/element_ref';
+import * as import20 from '../../../app/map/marker-note.component';
+import * as import21 from './marker-note.component.ngfactory';
+import * as import22 from '@angular/core/src/linker/element_ref';
 export class Wrapper_LeafletMapComponent {
   /*private*/ _eventHandler:Function;
   context:import0.LeafletMapComponent;
@@ -91,6 +93,7 @@ var renderType_LeafletMapComponent:import2.RenderComponentType = import3.createR
 export class View_LeafletMapComponent0 extends import1.AppView<import0.LeafletMapComponent> {
   _viewQuery_PopupComponent_0:import15.QueryList<any>;
   _viewQuery_MarkerMenuComponent_1:import15.QueryList<any>;
+  _viewQuery_MarkerNoteComponent_2:import15.QueryList<any>;
   _el_0:any;
   _text_1:any;
   _text_2:any;
@@ -136,6 +139,10 @@ export class View_LeafletMapComponent0 extends import1.AppView<import0.LeafletMa
   _el_40:any;
   compView_40:import1.AppView<import18.MarkerMenuComponent>;
   _MarkerMenuComponent_40_3:import19.Wrapper_MarkerMenuComponent;
+  _text_41:any;
+  _el_42:any;
+  compView_42:import1.AppView<import20.MarkerNoteComponent>;
+  _MarkerNoteComponent_42_3:import21.Wrapper_MarkerNoteComponent;
   constructor(viewUtils:import3.ViewUtils,parentView:import1.AppView<any>,parentIndex:number,parentElement:any) {
     super(View_LeafletMapComponent0,renderType_LeafletMapComponent,import5.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import6.ChangeDetectorStatus.CheckAlways);
   }
@@ -143,6 +150,7 @@ export class View_LeafletMapComponent0 extends import1.AppView<import0.LeafletMa
     const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);
     this._viewQuery_PopupComponent_0 = new import15.QueryList<any>();
     this._viewQuery_MarkerMenuComponent_1 = new import15.QueryList<any>();
+    this._viewQuery_MarkerNoteComponent_2 = new import15.QueryList<any>();
     this._el_0 = import3.createRenderElement(this.renderer,parentRenderNode,'div',new import3.InlineArray2(2,'class','map-context-menu'),(null as any));
     this._text_1 = this.renderer.createText(this._el_0,'\n\n',(null as any));
     this._text_2 = this.renderer.createText(parentRenderNode,'\n',(null as any));
@@ -183,13 +191,18 @@ export class View_LeafletMapComponent0 extends import1.AppView<import0.LeafletMa
     this._text_37 = this.renderer.createText(parentRenderNode,'\n',(null as any));
     this._el_38 = import3.createRenderElement(this.renderer,parentRenderNode,'popup',import3.EMPTY_INLINE_ARRAY,(null as any));
     this.compView_38 = new import17.View_PopupComponent0(this.viewUtils,this,38,this._el_38);
-    this._PopupComponent_38_3 = new import17.Wrapper_PopupComponent(new import20.ElementRef(this._el_38));
+    this._PopupComponent_38_3 = new import17.Wrapper_PopupComponent(new import22.ElementRef(this._el_38));
     this.compView_38.create(this._PopupComponent_38_3.context);
     this._text_39 = this.renderer.createText(parentRenderNode,'\n',(null as any));
     this._el_40 = import3.createRenderElement(this.renderer,parentRenderNode,'marker-menu',import3.EMPTY_INLINE_ARRAY,(null as any));
     this.compView_40 = new import19.View_MarkerMenuComponent0(this.viewUtils,this,40,this._el_40);
     this._MarkerMenuComponent_40_3 = new import19.Wrapper_MarkerMenuComponent();
     this.compView_40.create(this._MarkerMenuComponent_40_3.context);
+    this._text_41 = this.renderer.createText(parentRenderNode,'\n',(null as any));
+    this._el_42 = import3.createRenderElement(this.renderer,parentRenderNode,'marker-note',import3.EMPTY_INLINE_ARRAY,(null as any));
+    this.compView_42 = new import21.View_MarkerNoteComponent0(this.viewUtils,this,42,this._el_42);
+    this._MarkerNoteComponent_42_3 = new import21.Wrapper_MarkerNoteComponent(this.parentView.injectorGet(import11.RestService,this.parentIndex));
+    this.compView_42.create(this._MarkerNoteComponent_42_3.context);
     var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_5,new import3.InlineArray2(2,'click',(null as any)),this.eventHandler(this.handleEvent_5));
     var disposable_1:Function = import3.subscribeToRenderElement(this,this._el_8,new import3.InlineArray2(2,'click',(null as any)),this.eventHandler(this.handleEvent_8));
     var disposable_2:Function = import3.subscribeToRenderElement(this,this._el_11,new import3.InlineArray2(2,'click',(null as any)),this.eventHandler(this.handleEvent_11));
@@ -202,6 +215,8 @@ export class View_LeafletMapComponent0 extends import1.AppView<import0.LeafletMa
     this.context.popup = this._viewQuery_PopupComponent_0.first;
     this._viewQuery_MarkerMenuComponent_1.reset([this._MarkerMenuComponent_40_3.context]);
     this.context.markerMenu = this._viewQuery_MarkerMenuComponent_1.first;
+    this._viewQuery_MarkerNoteComponent_2.reset([this._MarkerNoteComponent_42_3.context]);
+    this.context.markerNote = this._viewQuery_MarkerNoteComponent_2.first;
     this.init((null as any),((<any>this.renderer).directRenderer? (null as any): [
       this._el_0,
       this._text_1,
@@ -243,7 +258,9 @@ export class View_LeafletMapComponent0 extends import1.AppView<import0.LeafletMa
       this._text_37,
       this._el_38,
       this._text_39,
-      this._el_40
+      this._el_40,
+      this._text_41,
+      this._el_42
     ]
     ),[
       disposable_0,
@@ -260,6 +277,7 @@ export class View_LeafletMapComponent0 extends import1.AppView<import0.LeafletMa
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import16.PopupComponent) && (38 === requestNodeIndex))) { return this._PopupComponent_38_3.context; }
     if (((token === import18.MarkerMenuComponent) && (40 === requestNodeIndex))) { return this._MarkerMenuComponent_40_3.context; }
+    if (((token === import20.MarkerNoteComponent) && (42 === requestNodeIndex))) { return this._MarkerNoteComponent_42_3.context; }
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
@@ -269,12 +287,15 @@ export class View_LeafletMapComponent0 extends import1.AppView<import0.LeafletMa
     this._PopupComponent_38_3.check_y(currVal_38_0_1,throwOnChange,false);
     this._PopupComponent_38_3.ngDoCheck(this,this._el_38,throwOnChange);
     this._MarkerMenuComponent_40_3.ngDoCheck(this,this._el_40,throwOnChange);
+    this._MarkerNoteComponent_42_3.ngDoCheck(this,this._el_42,throwOnChange);
     this.compView_38.internalDetectChanges(throwOnChange);
     this.compView_40.internalDetectChanges(throwOnChange);
+    this.compView_42.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
     this.compView_38.destroy();
     this.compView_40.destroy();
+    this.compView_42.destroy();
     this._MarkerMenuComponent_40_3.ngOnDestroy();
   }
   handleEvent_5(eventName:string,$event:any):boolean {
