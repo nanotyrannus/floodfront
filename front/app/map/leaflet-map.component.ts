@@ -18,45 +18,45 @@ declare var L: any
 declare var $: any
 @Component({
   selector: 'leaflet-component',
-  templateUrl: '/app/map/leaflet-map.component.html'
+  templateUrl: 'leaflet-map.component.html'
 })
 export class LeafletMapComponent {
-  private leafletMap: any
-  private primed: boolean = false
-  private markerTypeRef = MarkerType
-  private markerType: MarkerType
-  private markers: Marker[]
-  private selectedMarker: any
-  private files: Map<any, File> = new Map<any, File>()
-  private eventName: string
-  private eventId: number
-  private bounds: any
-  private awaitingLocation: boolean = true
+  public leafletMap: any
+  public primed: boolean = false
+  public markerTypeRef = MarkerType
+  public markerType: MarkerType
+  public markers: Marker[]
+  public selectedMarker: any
+  public files: Map<any, File> = new Map<any, File>()
+  public eventName: string
+  public eventId: number
+  public bounds: any
+  public awaitingLocation: boolean = true
 
-  private deviceWidth: number
-  private deviceHeight: number
-  private sliderRadius: number
-  private x: number
-  private y: number
-  private slider: any
-  private sliderDisplay: string = "none"
+  public deviceWidth: number
+  public deviceHeight: number
+  public sliderRadius: number
+  public x: number
+  public y: number
+  public slider: any
+  public sliderDisplay: string = "none"
 
   @ViewChild(PopupComponent)
-  private popup: PopupComponent
-  private clickX: number
-  private clickY: number
+  public popup: PopupComponent
+  public clickX: number
+  public clickY: number
 
   @ViewChild(MarkerMenuComponent)
-  private markerMenu: MarkerMenuComponent
+  public markerMenu: MarkerMenuComponent
 
   constructor(
-    private router: Router,
-    private eventService: EventService,
-    private userService: UserService,
-    private rest: RestService,
-    private nav: NavigationService,
-    private cookie: CookieService,
-    private zone: NgZone) { }
+    public router: Router,
+    public eventService: EventService,
+    public userService: UserService,
+    public rest: RestService,
+    public nav: NavigationService,
+    public cookie: CookieService,
+    public zone: NgZone) { }
   ngOnInit() {
     window['leafletComponent'] = {
       "upload": (id) => this.upload(id),
@@ -67,7 +67,7 @@ export class LeafletMapComponent {
       this.deviceHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
       this.popup.setDimensions(this.deviceWidth, this.deviceHeight)
 
-      this.sliderRadius = Math.ceil(this.deviceWidth / 12)
+      // this.sliderRadius = Math.ceil(this.deviceWidth / 12)
       this.eventName = this.eventService.eventName
       this.eventId = this.eventService.eventId
       // this.bounds = this.eventService.bounds.coordinates
@@ -76,28 +76,28 @@ export class LeafletMapComponent {
       this.router.navigate(['/event'])
     }
 
-    this.slider = $("#slider").CircularSlider({
-      "min": 0,
-      "max": 359,
-      "value": 0,
-      "radius": this.sliderRadius,
-      "onSlideEnd": (ui, val) => {
-        let marker = this.selectedMarker
-        console.log(val)
-        marker.setRotationAngle(val)
-        marker.heading = val
-        // On end, update
-        this.updateMarker(marker.id, marker.getLatLng(), val)
-      },
-      "slide": (ui, val) => {
-        if (!this.selectedMarker) {
-          return
-        } else {
-          this.selectedMarker.setRotationAngle(val)
-        }
-      },
-      "animate": false
-    })
+    // this.slider = $("#slider").CircularSlider({
+    //   "min": 0,
+    //   "max": 359,
+    //   "value": 0,
+    //   "radius": this.sliderRadius,
+    //   "onSlideEnd": (ui, val) => {
+    //     let marker = this.selectedMarker
+    //     console.log(val)
+    //     marker.setRotationAngle(val)
+    //     marker.heading = val
+    //     // On end, update
+    //     this.updateMarker(marker.id, marker.getLatLng(), val)
+    //   },
+    //   "slide": (ui, val) => {
+    //     if (!this.selectedMarker) {
+    //       return
+    //     } else {
+    //       this.selectedMarker.setRotationAngle(val)
+    //     }
+    //   },
+    //   "animate": false
+    // })
 
     console.log(`Getting markers for ${this.eventId}: ${this.eventName}`)
     // console.log(this.bounds)
@@ -107,6 +107,7 @@ export class LeafletMapComponent {
     }
     this.leafletMap = L.map('map', {
       "zoom": 18,
+      "center" : [0, 0],
       "doubleClickZoom": false
     })
     // this.leafletMap.fitBounds(L.latLng(this.bounds[0][0][1], this.bounds[0][0][0]), L.latLng(this.bounds[0][2][1], this.bounds[0][2][0])) // Bottom left and top right corners of bbox
@@ -122,7 +123,7 @@ export class LeafletMapComponent {
     // console.log(this.bounds[0])
 
     this.leafletMap.on("dragstart", event => {
-      this.sliderDisplay = "none"
+      // this.sliderDisplay = "none"
       this.zone.run(() => {
         this.popup.hide()
         this.popup.isVisible = false
@@ -138,7 +139,7 @@ export class LeafletMapComponent {
       //   // console.log(this.popup.getCoords())
       // })
 
-      this.sliderDisplay = "none"
+      // this.sliderDisplay = "none"
 
       if (this.primed) {
         this.primed = false
@@ -178,23 +179,23 @@ export class LeafletMapComponent {
     this.getMarkers()
   }
 
-  private gotoEvents(): void {
+  public gotoEvents(): void {
     // this.router.navigate(['/event'])
     /**
      * Demo only
      */
     this.userService.logout()
   }
-  private primeDefaultMarker(): void {
+  public primeDefaultMarker(): void {
     this.primed = true
     this.markerType = MarkerType.DEFAULT
   }
-  private primeDirectionalMarker(): void {
+  public primeDirectionalMarker(): void {
     this.primed = true
     this.markerType = MarkerType.DIRECTIONAL
   }
 
-  private getMarkers() {
+  public getMarkers() {
     this.rest.post(`/marker/${this.eventId}/retrieve`, {
       "email": this.cookie.get("email")
     }).subscribe(data => {
@@ -207,18 +208,18 @@ export class LeafletMapComponent {
     }, error => { console.error(error) })
   }
 
-  private showSlider(): void {
-    this.sliderDisplay = "block"
+  public showSlider(): void {
+    // this.sliderDisplay = "block"
   }
 
-  private hideSlider(): void {
-    this.sliderDisplay = "none"
+  public hideSlider(): void {
+    // this.sliderDisplay = "none"
   }
 
   /**
    * Create marker on server side.
    */
-  private createMarker(lat: number, lon: number, marker: any = null, type: MarkerType = null) {
+  public createMarker(lat: number, lon: number, marker: any = null, type: MarkerType = null) {
     let payload = {
       "type": type, //ignored on backend TODO: implementing type on backend
       "lat": lat,
@@ -243,7 +244,7 @@ export class LeafletMapComponent {
   // Refactoring to handle server and client-side markers
   // Don't need to pass markertype since available in scope
   // bindPopup can be merged into this method
-  private spawnMarker(latlng: any, type: MarkerType = null, oldMarker: any = null) {
+  public spawnMarker(latlng: any, type: MarkerType = null, oldMarker: any = null) {
     console.log(`spawnMarker called with ${latlng}`)
     let marker = L.marker(latlng, { "draggable": true, "rotationOrigin": "center" })
 
@@ -259,8 +260,8 @@ export class LeafletMapComponent {
       if (marker.clickCount === 2) {
         console.log("Double click detected.")
         // this.sliderDisplay = "block"
-        this.x = (event.originalEvent.clientX - this.sliderRadius - 20)
-        this.y = (event.originalEvent.clientY - this.sliderRadius - 20)
+        // this.x = (event.originalEvent.clientX - this.sliderRadius - 20)
+        // this.y = (event.originalEvent.clientY - this.sliderRadius - 20)
 
       }
       setTimeout(() => {
@@ -275,8 +276,10 @@ export class LeafletMapComponent {
         $(":file").filestyle({
           iconName : "glyphicon glyphicon-camera", 
           input : false,
-          buttonText : "Take photo"
+          buttonText : "Photo"
         }) 
+        $("div.bootstrap-filestyle.input-group").css("width", "100%")
+        $("label.btn.btn-default").css("width", "100%")
       }, 0)
     })
     marker.on("contextmenu", event => {
@@ -373,15 +376,17 @@ export class LeafletMapComponent {
     marker.addTo(this.leafletMap)
   }
 
-  private bindPopup(marker: any, type: MarkerType = MarkerType.DEFAULT) {
+  public bindPopup(marker: any, type: MarkerType = MarkerType.DEFAULT) {
     console.log(`from bindPopup: ${marker.id}`)
     marker.unbindPopup()
     let id = marker.id
     let markup = `
         <img id="thumbnail-${marker.id}" class="thumbnail map-thumbnail" src="/uploads/${marker.id}.jpg">
         <form enctype="multipart/form-data" action="https://localhost:8080/upload" method="POST">
-        <input class="filestyle" data-iconName="glyphicon glyphicon-camera" type="file" name="picture" accept="image/*" onchange="window.leafletComponent.readUrl(this, ${marker.id})">
+        <input style="display: inline;" class="filestyle" data-iconName="glyphicon glyphicon-camera" type="file" name="picture" accept="image/*" onchange="window.leafletComponent.readUrl(this, ${marker.id})">
         </form>
+        <button class="btn btn-default context-btn">Note</button>
+        <button class="btn btn-default context-btn">Delete</button>
         <!-- <button class="btn btn-default" onclick="window.leafletComponent.upload(${marker.id})">UPLOAD</button> -->
     `
     // if (marker.type === MarkerType.DIRECTIONAL) {
@@ -390,7 +395,7 @@ export class LeafletMapComponent {
     marker.bindPopup(markup, { "autoPan": false })
   }
 
-  private readUrl(value: any, markerId: number) {
+  public readUrl(value: any, markerId: number) {
     console.log(value)
     var elm = document.getElementById(`thumbnail-${markerId}`)
     var reader = new FileReader() //
@@ -402,7 +407,7 @@ export class LeafletMapComponent {
     this.upload(markerId)
   }
 
-  private updateMarker(id: number, latlng: any, heading: number = null) {
+  public updateMarker(id: number, latlng: any, heading: number = null) {
     console.log(`updateMarker called with ${id} ${heading}`, latlng)
     this.rest.post(`/marker/${id}/update`, {
       "lat": latlng.lat,
@@ -414,7 +419,7 @@ export class LeafletMapComponent {
   }
 
 
-  private initiateNavigation() {
+  public initiateNavigation() {
     // Turn this into one-time execution using AsyncSubject
     this.nav.getCurrentPosition().subscribe(pos => {
       if (this.awaitingLocation) {
@@ -425,7 +430,7 @@ export class LeafletMapComponent {
 
   }
 
-  private centerMap() {
+  public centerMap() {
     if (this.nav.currentPosition) {
       this.leafletMap.setView(this.nav.currentPosition)
     } else {
@@ -433,21 +438,21 @@ export class LeafletMapComponent {
     }
   }
 
-  private primeMarker(type: MarkerType) {
+  public primeMarker(type: MarkerType) {
     this.markerType = type
     this.primed = true
   }
 
-  private markerPlaced() {
+  public markerPlaced() {
     this.markerType = null
     this.primed = false
   }
 
-  private toggleInfo() {
+  public toggleInfo() {
     this.markerMenu.toggle()
   }
 
-  private onMarkerPicked(type: MarkerType) {
+  public onMarkerPicked(type: MarkerType) {
     this.primeMarker(type)
   }
 

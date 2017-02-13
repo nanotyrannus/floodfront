@@ -45,6 +45,11 @@ background: linear-gradient(to left, #4b6cb7 , #182848); /* W3C, IE 10+/ Edge, F
     background-color: #d3d3d3;
 }
 
+.context-btn {
+    margin-bottom: 1em !important;
+    width: 100%;
+}
+
 .map-button:active {
     background-color: #FFFFFF;
     color: #02a4d3;

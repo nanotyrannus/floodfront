@@ -7,7 +7,7 @@ import { NavigationService } from '../shared/navigation.service'
 
 @Component({
   selector: 'event-component',
-  templateUrl : '/app/event/event.component.html'
+  templateUrl : 'event.component.html'
 })
 export class EventComponent { 
 

@@ -1,0 +1,20 @@
+{
+    "remotePath": "./ftp-front",
+    "host": "rconstantino.com",
+    "username": "ryan",
+    "password": "",
+    "port": 22,
+    "secure": true,
+    "protocol": "sftp",
+    "uploadOnSave": true,
+    "passive": false,
+    "debug": false,
+    "privateKeyPath": "/home/ryan/.ssh/jasminum",
+    "passphrase": null,
+    "ignore": [
+        "\\.vscode",
+        "\\.git",
+        "\\.DS_Store",
+        "\\node_modules"
+    ]
+}

@@ -1,7 +1,7 @@
 import { Component, Input, ElementRef } from "@angular/core"
 
 @Component({
-    "templateUrl" : "/app/map/popup.component.html",
+    "templateUrl" : "popup.component.html",
     "selector" : "popup",
     "styles" : [`
         .popup { 
@@ -15,17 +15,17 @@ import { Component, Input, ElementRef } from "@angular/core"
 })
 export class PopupComponent {
     public isVisible: boolean = false
-    @Input() private x: number
-    @Input() private y: number
-    private width: number
-    private height: number
-    private marker: any
+    @Input() public x: number
+    @Input() public y: number
+    public width: number
+    public height: number
+    public marker: any
 
     constructor(private ref: ElementRef) {
 
     }
 
-    private display(): string {
+    public display(): string {
         if (this.isVisible) {
             return "visible"
         } else {

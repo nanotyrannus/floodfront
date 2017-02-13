@@ -8,7 +8,7 @@ import { MarkerType } from "./marker.enum"
 
 @Component({
     "selector" : "marker-menu",
-    "templateUrl" : "/app/map/marker-menu.component.html",
+    "templateUrl" : "marker-menu.component.html",
     "styles" : [`
         .marker-menu-container-visible {
             background-color: white;
@@ -35,10 +35,10 @@ import { MarkerType } from "./marker.enum"
 })
 export class MarkerMenuComponent {
 
-    private isVisible: boolean = false
-    private visibility: string = "hidden"
-    private markerType = MarkerType
-    private className: string = "marker-menu-container-hidden"
+    public isVisible: boolean = false
+    public visibility: string = "hidden"
+    public markerType = MarkerType
+    public className: string = "marker-menu-container-hidden"
     @Output() onMarkerPicked = new EventEmitter<MarkerType>()
     
     /**
