@@ -12,14 +12,13 @@ import { Router } from '@angular/router';
 import { EventService } from './event.service';
 import { RestService } from '../shared/rest.service';
 import { EnvironmentService } from '../shared/environment.service';
-import { NavigationService } from '../shared/navigation.service';
+// import { NavigationService } from '../shared/navigation.service'
 var EventComponent = (function () {
-    function EventComponent(env, rest, eventService, router, nav) {
+    function EventComponent(env, rest, eventService, router) {
         this.env = env;
         this.rest = rest;
         this.eventService = eventService;
         this.router = router;
-        this.nav = nav;
     }
     EventComponent.prototype.ngOnInit = function () {
         console.log("Base URL : " + this.env.baseUrl);
@@ -29,7 +28,7 @@ var EventComponent = (function () {
         //   console.error(error)
         // })
         this.getEvents();
-        this.nav.track();
+        // this.nav.track()
     };
     EventComponent.prototype.getEvents = function () {
         var _this = this;
@@ -102,8 +101,7 @@ EventComponent = __decorate([
     __metadata("design:paramtypes", [EnvironmentService,
         RestService,
         EventService,
-        Router,
-        NavigationService])
+        Router])
 ], EventComponent);
 export { EventComponent };
 //# sourceMappingURL=event.component.js.map

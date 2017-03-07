@@ -32,7 +32,7 @@ export class UserService {
                 this.router.navigate(['/event'])
             },
             error => {
-
+                console.error(error)
             }
         )
     }

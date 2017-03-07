@@ -25,29 +25,28 @@ import * as import8 from '../../../app/shared/environment.service';
 import * as import9 from '../../../app/shared/rest.service';
 import * as import10 from '../../../app/event/event.service';
 import * as import11 from '@angular/router/src/router';
-import * as import12 from '../../../app/shared/navigation.service';
-import * as import13 from '@angular/core/src/linker/view_container';
-import * as import14 from '@angular/core/src/change_detection/change_detection_util';
-import * as import15 from '../../node_modules/@angular/common/src/directives/ng_for.ngfactory';
-import * as import16 from '../../node_modules/@angular/forms/src/directives/ng_form.ngfactory';
-import * as import17 from '../../node_modules/@angular/forms/src/directives/ng_control_status.ngfactory';
-import * as import18 from '../../node_modules/@angular/forms/src/directives/default_value_accessor.ngfactory';
-import * as import19 from '../../node_modules/@angular/forms/src/directives/ng_model.ngfactory';
-import * as import20 from '@angular/core/src/linker/template_ref';
-import * as import21 from '@angular/core/src/change_detection/differs/iterable_differs';
-import * as import22 from '@angular/core/src/linker/element_ref';
-import * as import23 from '@angular/common/src/directives/ng_for';
-import * as import24 from '@angular/forms/src/directives/ng_form';
-import * as import25 from '@angular/forms/src/directives/control_container';
-import * as import26 from '@angular/forms/src/directives/ng_control_status';
-import * as import27 from '@angular/forms/src/directives/default_value_accessor';
-import * as import28 from '@angular/forms/src/directives/control_value_accessor';
-import * as import29 from '@angular/forms/src/directives/ng_model';
-import * as import30 from '@angular/forms/src/directives/ng_control';
+import * as import12 from '@angular/core/src/linker/view_container';
+import * as import13 from '@angular/core/src/change_detection/change_detection_util';
+import * as import14 from '../../node_modules/@angular/common/src/directives/ng_for.ngfactory';
+import * as import15 from '../../node_modules/@angular/forms/src/directives/ng_form.ngfactory';
+import * as import16 from '../../node_modules/@angular/forms/src/directives/ng_control_status.ngfactory';
+import * as import17 from '../../node_modules/@angular/forms/src/directives/default_value_accessor.ngfactory';
+import * as import18 from '../../node_modules/@angular/forms/src/directives/ng_model.ngfactory';
+import * as import19 from '@angular/core/src/linker/template_ref';
+import * as import20 from '@angular/core/src/change_detection/differs/iterable_differs';
+import * as import21 from '@angular/core/src/linker/element_ref';
+import * as import22 from '@angular/common/src/directives/ng_for';
+import * as import23 from '@angular/forms/src/directives/ng_form';
+import * as import24 from '@angular/forms/src/directives/control_container';
+import * as import25 from '@angular/forms/src/directives/ng_control_status';
+import * as import26 from '@angular/forms/src/directives/default_value_accessor';
+import * as import27 from '@angular/forms/src/directives/control_value_accessor';
+import * as import28 from '@angular/forms/src/directives/ng_model';
+import * as import29 from '@angular/forms/src/directives/ng_control';
 var Wrapper_EventComponent = (function () {
-    function Wrapper_EventComponent(p0, p1, p2, p3, p4) {
+    function Wrapper_EventComponent(p0, p1, p2, p3) {
         this._changed = false;
-        this.context = new import0.EventComponent(p0, p1, p2, p3, p4);
+        this.context = new import0.EventComponent(p0, p1, p2, p3);
     }
     Wrapper_EventComponent.prototype.ngOnDetach = function (view, componentView, el) {
     };
@@ -84,7 +83,7 @@ var View_EventComponent_Host0 = (function (_super) {
     View_EventComponent_Host0.prototype.createInternal = function (rootSelector) {
         this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer, 'event-component', import3.EMPTY_INLINE_ARRAY, rootSelector, null);
         this.compView_0 = new View_EventComponent0(this.viewUtils, this, 0, this._el_0);
-        this._EventComponent_0_3 = new Wrapper_EventComponent(this.injectorGet(import8.EnvironmentService, this.parentIndex), this.injectorGet(import9.RestService, this.parentIndex), this.injectorGet(import10.EventService, this.parentIndex), this.injectorGet(import11.Router, this.parentIndex), this.injectorGet(import12.NavigationService, this.parentIndex));
+        this._EventComponent_0_3 = new Wrapper_EventComponent(this.injectorGet(import8.EnvironmentService, this.parentIndex), this.injectorGet(import9.RestService, this.parentIndex), this.injectorGet(import10.EventService, this.parentIndex), this.injectorGet(import11.Router, this.parentIndex));
         this.compView_0.create(this._EventComponent_0_3.context);
         this.init(this._el_0, (this.renderer.directRenderer ? null : [this._el_0]), null);
         return new import7.ComponentRef_(0, this, this._el_0, this._EventComponent_0_3.context);
@@ -113,8 +112,8 @@ var View_EventComponent1 = (function (_super) {
     __extends(View_EventComponent1, _super);
     function View_EventComponent1(viewUtils, parentView, parentIndex, parentElement, declaredViewContainer) {
         var _this = _super.call(this, View_EventComponent1, renderType_EventComponent, import5.ViewType.EMBEDDED, viewUtils, parentView, parentIndex, parentElement, import6.ChangeDetectorStatus.CheckAlways, declaredViewContainer) || this;
-        _this._expr_19 = import14.UNINITIALIZED;
-        _this._expr_20 = import14.UNINITIALIZED;
+        _this._expr_19 = import13.UNINITIALIZED;
+        _this._expr_20 = import13.UNINITIALIZED;
         return _this;
     }
     View_EventComponent1.prototype.createInternal = function (rootSelector) {
@@ -192,154 +191,156 @@ var View_EventComponent0 = (function (_super) {
     __extends(View_EventComponent0, _super);
     function View_EventComponent0(viewUtils, parentView, parentIndex, parentElement) {
         var _this = _super.call(this, View_EventComponent0, renderType_EventComponent, import5.ViewType.COMPONENT, viewUtils, parentView, parentIndex, parentElement, import6.ChangeDetectorStatus.CheckAlways) || this;
-        _this._expr_82 = import14.UNINITIALIZED;
+        _this._expr_83 = import13.UNINITIALIZED;
         return _this;
     }
     View_EventComponent0.prototype.createInternal = function (rootSelector) {
         var parentRenderNode = this.renderer.createViewRoot(this.parentElement);
-        this._el_0 = import3.createRenderElement(this.renderer, parentRenderNode, 'div', import3.EMPTY_INLINE_ARRAY, null);
-        this._text_1 = this.renderer.createText(this._el_0, '\n    ', null);
-        this._el_2 = import3.createRenderElement(this.renderer, this._el_0, 'div', new import3.InlineArray2(2, 'class', 'event-list-container container'), null);
-        this._text_3 = this.renderer.createText(this._el_2, '\n        ', null);
-        this._anchor_4 = this.renderer.createTemplateAnchor(this._el_2, null);
-        this._vc_4 = new import13.ViewContainer(4, 2, this, this._anchor_4);
-        this._TemplateRef_4_5 = new import20.TemplateRef_(this, 4, this._anchor_4);
-        this._NgFor_4_6 = new import15.Wrapper_NgFor(this._vc_4.vcRef, this._TemplateRef_4_5, this.parentView.injectorGet(import21.IterableDiffers, this.parentIndex), this.ref);
-        this._text_5 = this.renderer.createText(this._el_2, '\n    ', null);
-        this._text_6 = this.renderer.createText(this._el_0, '\n    ', null);
-        this._el_7 = import3.createRenderElement(this.renderer, this._el_0, 'form', new import3.InlineArray8(6, 'action', 'https://localhost:8080/upload', 'enctype', 'multipart/form-data', 'method', 'POST'), null);
-        this._NgForm_7_3 = new import16.Wrapper_NgForm(null, null);
-        this._ControlContainer_7_4 = this._NgForm_7_3.context;
-        this._NgControlStatusGroup_7_5 = new import17.Wrapper_NgControlStatusGroup(this._ControlContainer_7_4);
-        this._text_8 = this.renderer.createText(this._el_7, '\n        ', null);
-        this._el_9 = import3.createRenderElement(this.renderer, this._el_7, 'input', new import3.InlineArray8(6, 'accept', 'image/*', 'name', 'picture', 'type', 'file'), null);
-        this._text_10 = this.renderer.createText(this._el_7, '\n        ', null);
-        this._el_11 = import3.createRenderElement(this.renderer, this._el_7, 'img', new import3.InlineArray8(6, 'id', 'test', 'onchange', 'console.log(\'changed\')', 'src', '#'), null);
-        this._text_12 = this.renderer.createText(this._el_7, '\n        ', null);
-        this._text_13 = this.renderer.createText(this._el_7, '\n        ', null);
-        this._el_14 = import3.createRenderElement(this.renderer, this._el_7, 'button', new import3.InlineArray2(2, 'class', 'btn btn-default'), null);
-        this._text_15 = this.renderer.createText(this._el_14, 'UPLOAD', null);
-        this._text_16 = this.renderer.createText(this._el_7, '\n    ', null);
-        this._text_17 = this.renderer.createText(this._el_0, '\n    ', null);
-        this._el_18 = import3.createRenderElement(this.renderer, this._el_0, 'form', new import3.InlineArray2(2, 'class', 'form-inline'), null);
-        this._NgForm_18_3 = new import16.Wrapper_NgForm(null, null);
-        this._ControlContainer_18_4 = this._NgForm_18_3.context;
-        this._NgControlStatusGroup_18_5 = new import17.Wrapper_NgControlStatusGroup(this._ControlContainer_18_4);
-        this._text_19 = this.renderer.createText(this._el_18, '\n        ', null);
-        this._el_20 = import3.createRenderElement(this.renderer, this._el_18, 'div', new import3.InlineArray2(2, 'class', 'form group'), null);
-        this._el_21 = import3.createRenderElement(this.renderer, this._el_20, 'input', new import3.InlineArray8(8, 'class', 'form-control', 'name', 'name', 'placeholder', 'Event name', 'type', 'text'), null);
-        this._DefaultValueAccessor_21_3 = new import18.Wrapper_DefaultValueAccessor(this.renderer, new import22.ElementRef(this._el_21));
-        this._NG_VALUE_ACCESSOR_21_4 = [this._DefaultValueAccessor_21_3.context];
-        this._NgModel_21_5 = new import19.Wrapper_NgModel(this._ControlContainer_18_4, null, null, this._NG_VALUE_ACCESSOR_21_4);
-        this._NgControl_21_6 = this._NgModel_21_5.context;
-        this._NgControlStatus_21_7 = new import17.Wrapper_NgControlStatus(this._NgControl_21_6);
-        this._text_22 = this.renderer.createText(this._el_18, '\n        ', null);
-        this._el_23 = import3.createRenderElement(this.renderer, this._el_18, 'div', new import3.InlineArray2(2, 'class', 'form group'), null);
-        this._el_24 = import3.createRenderElement(this.renderer, this._el_23, 'input', new import3.InlineArray8(8, 'class', 'form-control', 'name', 'description', 'placeholder', 'Desc.', 'type', 'text'), null);
-        this._DefaultValueAccessor_24_3 = new import18.Wrapper_DefaultValueAccessor(this.renderer, new import22.ElementRef(this._el_24));
-        this._NG_VALUE_ACCESSOR_24_4 = [this._DefaultValueAccessor_24_3.context];
-        this._NgModel_24_5 = new import19.Wrapper_NgModel(this._ControlContainer_18_4, null, null, this._NG_VALUE_ACCESSOR_24_4);
-        this._NgControl_24_6 = this._NgModel_24_5.context;
-        this._NgControlStatus_24_7 = new import17.Wrapper_NgControlStatus(this._NgControl_24_6);
-        this._text_25 = this.renderer.createText(this._el_18, '\n        ', null);
-        this._el_26 = import3.createRenderElement(this.renderer, this._el_18, 'div', new import3.InlineArray2(2, 'class', 'form group'), null);
-        this._el_27 = import3.createRenderElement(this.renderer, this._el_26, 'input', new import3.InlineArray8(8, 'class', 'form-control', 'name', 'minLat', 'placeholder', 'Min lat', 'type', 'text'), null);
-        this._DefaultValueAccessor_27_3 = new import18.Wrapper_DefaultValueAccessor(this.renderer, new import22.ElementRef(this._el_27));
-        this._NG_VALUE_ACCESSOR_27_4 = [this._DefaultValueAccessor_27_3.context];
-        this._NgModel_27_5 = new import19.Wrapper_NgModel(this._ControlContainer_18_4, null, null, this._NG_VALUE_ACCESSOR_27_4);
-        this._NgControl_27_6 = this._NgModel_27_5.context;
-        this._NgControlStatus_27_7 = new import17.Wrapper_NgControlStatus(this._NgControl_27_6);
-        this._text_28 = this.renderer.createText(this._el_18, '\n        ', null);
-        this._el_29 = import3.createRenderElement(this.renderer, this._el_18, 'div', new import3.InlineArray2(2, 'class', 'form group'), null);
-        this._el_30 = import3.createRenderElement(this.renderer, this._el_29, 'input', new import3.InlineArray8(8, 'class', 'form-control', 'name', 'minLon', 'placeholder', 'Min lon', 'type', 'text'), null);
-        this._DefaultValueAccessor_30_3 = new import18.Wrapper_DefaultValueAccessor(this.renderer, new import22.ElementRef(this._el_30));
-        this._NG_VALUE_ACCESSOR_30_4 = [this._DefaultValueAccessor_30_3.context];
-        this._NgModel_30_5 = new import19.Wrapper_NgModel(this._ControlContainer_18_4, null, null, this._NG_VALUE_ACCESSOR_30_4);
-        this._NgControl_30_6 = this._NgModel_30_5.context;
-        this._NgControlStatus_30_7 = new import17.Wrapper_NgControlStatus(this._NgControl_30_6);
-        this._text_31 = this.renderer.createText(this._el_18, '\n        ', null);
-        this._el_32 = import3.createRenderElement(this.renderer, this._el_18, 'div', new import3.InlineArray2(2, 'class', 'form group'), null);
-        this._el_33 = import3.createRenderElement(this.renderer, this._el_32, 'input', new import3.InlineArray8(8, 'class', 'form-control', 'name', 'maxLat', 'placeholder', 'Max lat', 'type', 'text'), null);
-        this._DefaultValueAccessor_33_3 = new import18.Wrapper_DefaultValueAccessor(this.renderer, new import22.ElementRef(this._el_33));
-        this._NG_VALUE_ACCESSOR_33_4 = [this._DefaultValueAccessor_33_3.context];
-        this._NgModel_33_5 = new import19.Wrapper_NgModel(this._ControlContainer_18_4, null, null, this._NG_VALUE_ACCESSOR_33_4);
-        this._NgControl_33_6 = this._NgModel_33_5.context;
-        this._NgControlStatus_33_7 = new import17.Wrapper_NgControlStatus(this._NgControl_33_6);
-        this._text_34 = this.renderer.createText(this._el_18, '\n        ', null);
-        this._el_35 = import3.createRenderElement(this.renderer, this._el_18, 'div', new import3.InlineArray2(2, 'class', 'form group'), null);
-        this._el_36 = import3.createRenderElement(this.renderer, this._el_35, 'input', new import3.InlineArray8(8, 'class', 'form-control', 'name', 'maxLon', 'placeholder', 'Max lon', 'type', 'text'), null);
-        this._DefaultValueAccessor_36_3 = new import18.Wrapper_DefaultValueAccessor(this.renderer, new import22.ElementRef(this._el_36));
-        this._NG_VALUE_ACCESSOR_36_4 = [this._DefaultValueAccessor_36_3.context];
-        this._NgModel_36_5 = new import19.Wrapper_NgModel(this._ControlContainer_18_4, null, null, this._NG_VALUE_ACCESSOR_36_4);
-        this._NgControl_36_6 = this._NgModel_36_5.context;
-        this._NgControlStatus_36_7 = new import17.Wrapper_NgControlStatus(this._NgControl_36_6);
-        this._text_37 = this.renderer.createText(this._el_18, '\n        ', null);
-        this._el_38 = import3.createRenderElement(this.renderer, this._el_18, 'button', new import3.InlineArray2(2, 'class', 'btn btn-default'), null);
-        this._text_39 = this.renderer.createText(this._el_38, 'CREATE EVENT', null);
-        this._text_40 = this.renderer.createText(this._el_18, '\n    ', null);
-        this._text_41 = this.renderer.createText(this._el_0, '\n    ', null);
-        this._text_42 = this.renderer.createText(this._el_0, '\n', null);
-        var disposable_0 = import3.subscribeToRenderElement(this, this._el_7, new import3.InlineArray4(4, 'submit', null, 'reset', null), this.eventHandler(this.handleEvent_7));
-        var disposable_1 = import3.subscribeToRenderElement(this, this._el_9, new import3.InlineArray2(2, 'change', null), this.eventHandler(this.handleEvent_9));
-        var disposable_2 = import3.subscribeToRenderElement(this, this._el_14, new import3.InlineArray2(2, 'click', null), this.eventHandler(this.handleEvent_14));
-        var disposable_3 = import3.subscribeToRenderElement(this, this._el_18, new import3.InlineArray4(4, 'submit', null, 'reset', null), this.eventHandler(this.handleEvent_18));
-        var disposable_4 = import3.subscribeToRenderElement(this, this._el_21, new import3.InlineArray8(6, 'ngModelChange', null, 'input', null, 'blur', null), this.eventHandler(this.handleEvent_21));
-        this._NgModel_21_5.subscribe(this, this.eventHandler(this.handleEvent_21), true);
-        var disposable_5 = import3.subscribeToRenderElement(this, this._el_24, new import3.InlineArray8(6, 'ngModelChange', null, 'input', null, 'blur', null), this.eventHandler(this.handleEvent_24));
-        this._NgModel_24_5.subscribe(this, this.eventHandler(this.handleEvent_24), true);
-        var disposable_6 = import3.subscribeToRenderElement(this, this._el_27, new import3.InlineArray8(6, 'ngModelChange', null, 'input', null, 'blur', null), this.eventHandler(this.handleEvent_27));
-        this._NgModel_27_5.subscribe(this, this.eventHandler(this.handleEvent_27), true);
-        var disposable_7 = import3.subscribeToRenderElement(this, this._el_30, new import3.InlineArray8(6, 'ngModelChange', null, 'input', null, 'blur', null), this.eventHandler(this.handleEvent_30));
-        this._NgModel_30_5.subscribe(this, this.eventHandler(this.handleEvent_30), true);
-        var disposable_8 = import3.subscribeToRenderElement(this, this._el_33, new import3.InlineArray8(6, 'ngModelChange', null, 'input', null, 'blur', null), this.eventHandler(this.handleEvent_33));
-        this._NgModel_33_5.subscribe(this, this.eventHandler(this.handleEvent_33), true);
-        var disposable_9 = import3.subscribeToRenderElement(this, this._el_36, new import3.InlineArray8(6, 'ngModelChange', null, 'input', null, 'blur', null), this.eventHandler(this.handleEvent_36));
-        this._NgModel_36_5.subscribe(this, this.eventHandler(this.handleEvent_36), true);
-        var disposable_10 = import3.subscribeToRenderElement(this, this._el_38, new import3.InlineArray2(2, 'click', null), this.eventHandler(this.handleEvent_38));
+        this._el_0 = import3.createRenderElement(this.renderer, parentRenderNode, 'div', new import3.InlineArray2(2, 'style', 'visibility: hidden;'), null);
+        this._text_1 = this.renderer.createText(this._el_0, ' \n    ', null);
+        this._text_2 = this.renderer.createText(this._el_0, '\n    ', null);
+        this._el_3 = import3.createRenderElement(this.renderer, this._el_0, 'div', new import3.InlineArray2(2, 'class', 'event-list-container container'), null);
+        this._text_4 = this.renderer.createText(this._el_3, '\n        ', null);
+        this._anchor_5 = this.renderer.createTemplateAnchor(this._el_3, null);
+        this._vc_5 = new import12.ViewContainer(5, 3, this, this._anchor_5);
+        this._TemplateRef_5_5 = new import19.TemplateRef_(this, 5, this._anchor_5);
+        this._NgFor_5_6 = new import14.Wrapper_NgFor(this._vc_5.vcRef, this._TemplateRef_5_5, this.parentView.injectorGet(import20.IterableDiffers, this.parentIndex), this.ref);
+        this._text_6 = this.renderer.createText(this._el_3, '\n    ', null);
+        this._text_7 = this.renderer.createText(this._el_0, '\n    ', null);
+        this._el_8 = import3.createRenderElement(this.renderer, this._el_0, 'form', new import3.InlineArray8(6, 'action', 'https://localhost:8080/upload', 'enctype', 'multipart/form-data', 'method', 'POST'), null);
+        this._NgForm_8_3 = new import15.Wrapper_NgForm(null, null);
+        this._ControlContainer_8_4 = this._NgForm_8_3.context;
+        this._NgControlStatusGroup_8_5 = new import16.Wrapper_NgControlStatusGroup(this._ControlContainer_8_4);
+        this._text_9 = this.renderer.createText(this._el_8, '\n        ', null);
+        this._el_10 = import3.createRenderElement(this.renderer, this._el_8, 'input', new import3.InlineArray8(6, 'accept', 'image/*', 'name', 'picture', 'type', 'file'), null);
+        this._text_11 = this.renderer.createText(this._el_8, '\n        ', null);
+        this._el_12 = import3.createRenderElement(this.renderer, this._el_8, 'img', new import3.InlineArray8(6, 'id', 'test', 'onchange', 'console.log(\'changed\')', 'src', '#'), null);
+        this._text_13 = this.renderer.createText(this._el_8, '\n        ', null);
+        this._text_14 = this.renderer.createText(this._el_8, '\n        ', null);
+        this._el_15 = import3.createRenderElement(this.renderer, this._el_8, 'button', new import3.InlineArray2(2, 'class', 'btn btn-default'), null);
+        this._text_16 = this.renderer.createText(this._el_15, 'UPLOAD', null);
+        this._text_17 = this.renderer.createText(this._el_8, '\n    ', null);
+        this._text_18 = this.renderer.createText(this._el_0, '\n    ', null);
+        this._el_19 = import3.createRenderElement(this.renderer, this._el_0, 'form', new import3.InlineArray2(2, 'class', 'form-inline'), null);
+        this._NgForm_19_3 = new import15.Wrapper_NgForm(null, null);
+        this._ControlContainer_19_4 = this._NgForm_19_3.context;
+        this._NgControlStatusGroup_19_5 = new import16.Wrapper_NgControlStatusGroup(this._ControlContainer_19_4);
+        this._text_20 = this.renderer.createText(this._el_19, '\n        ', null);
+        this._el_21 = import3.createRenderElement(this.renderer, this._el_19, 'div', new import3.InlineArray2(2, 'class', 'form group'), null);
+        this._el_22 = import3.createRenderElement(this.renderer, this._el_21, 'input', new import3.InlineArray8(8, 'class', 'form-control', 'name', 'name', 'placeholder', 'Event name', 'type', 'text'), null);
+        this._DefaultValueAccessor_22_3 = new import17.Wrapper_DefaultValueAccessor(this.renderer, new import21.ElementRef(this._el_22));
+        this._NG_VALUE_ACCESSOR_22_4 = [this._DefaultValueAccessor_22_3.context];
+        this._NgModel_22_5 = new import18.Wrapper_NgModel(this._ControlContainer_19_4, null, null, this._NG_VALUE_ACCESSOR_22_4);
+        this._NgControl_22_6 = this._NgModel_22_5.context;
+        this._NgControlStatus_22_7 = new import16.Wrapper_NgControlStatus(this._NgControl_22_6);
+        this._text_23 = this.renderer.createText(this._el_19, '\n        ', null);
+        this._el_24 = import3.createRenderElement(this.renderer, this._el_19, 'div', new import3.InlineArray2(2, 'class', 'form group'), null);
+        this._el_25 = import3.createRenderElement(this.renderer, this._el_24, 'input', new import3.InlineArray8(8, 'class', 'form-control', 'name', 'description', 'placeholder', 'Desc.', 'type', 'text'), null);
+        this._DefaultValueAccessor_25_3 = new import17.Wrapper_DefaultValueAccessor(this.renderer, new import21.ElementRef(this._el_25));
+        this._NG_VALUE_ACCESSOR_25_4 = [this._DefaultValueAccessor_25_3.context];
+        this._NgModel_25_5 = new import18.Wrapper_NgModel(this._ControlContainer_19_4, null, null, this._NG_VALUE_ACCESSOR_25_4);
+        this._NgControl_25_6 = this._NgModel_25_5.context;
+        this._NgControlStatus_25_7 = new import16.Wrapper_NgControlStatus(this._NgControl_25_6);
+        this._text_26 = this.renderer.createText(this._el_19, '\n        ', null);
+        this._el_27 = import3.createRenderElement(this.renderer, this._el_19, 'div', new import3.InlineArray2(2, 'class', 'form group'), null);
+        this._el_28 = import3.createRenderElement(this.renderer, this._el_27, 'input', new import3.InlineArray8(8, 'class', 'form-control', 'name', 'minLat', 'placeholder', 'Min lat', 'type', 'text'), null);
+        this._DefaultValueAccessor_28_3 = new import17.Wrapper_DefaultValueAccessor(this.renderer, new import21.ElementRef(this._el_28));
+        this._NG_VALUE_ACCESSOR_28_4 = [this._DefaultValueAccessor_28_3.context];
+        this._NgModel_28_5 = new import18.Wrapper_NgModel(this._ControlContainer_19_4, null, null, this._NG_VALUE_ACCESSOR_28_4);
+        this._NgControl_28_6 = this._NgModel_28_5.context;
+        this._NgControlStatus_28_7 = new import16.Wrapper_NgControlStatus(this._NgControl_28_6);
+        this._text_29 = this.renderer.createText(this._el_19, '\n        ', null);
+        this._el_30 = import3.createRenderElement(this.renderer, this._el_19, 'div', new import3.InlineArray2(2, 'class', 'form group'), null);
+        this._el_31 = import3.createRenderElement(this.renderer, this._el_30, 'input', new import3.InlineArray8(8, 'class', 'form-control', 'name', 'minLon', 'placeholder', 'Min lon', 'type', 'text'), null);
+        this._DefaultValueAccessor_31_3 = new import17.Wrapper_DefaultValueAccessor(this.renderer, new import21.ElementRef(this._el_31));
+        this._NG_VALUE_ACCESSOR_31_4 = [this._DefaultValueAccessor_31_3.context];
+        this._NgModel_31_5 = new import18.Wrapper_NgModel(this._ControlContainer_19_4, null, null, this._NG_VALUE_ACCESSOR_31_4);
+        this._NgControl_31_6 = this._NgModel_31_5.context;
+        this._NgControlStatus_31_7 = new import16.Wrapper_NgControlStatus(this._NgControl_31_6);
+        this._text_32 = this.renderer.createText(this._el_19, '\n        ', null);
+        this._el_33 = import3.createRenderElement(this.renderer, this._el_19, 'div', new import3.InlineArray2(2, 'class', 'form group'), null);
+        this._el_34 = import3.createRenderElement(this.renderer, this._el_33, 'input', new import3.InlineArray8(8, 'class', 'form-control', 'name', 'maxLat', 'placeholder', 'Max lat', 'type', 'text'), null);
+        this._DefaultValueAccessor_34_3 = new import17.Wrapper_DefaultValueAccessor(this.renderer, new import21.ElementRef(this._el_34));
+        this._NG_VALUE_ACCESSOR_34_4 = [this._DefaultValueAccessor_34_3.context];
+        this._NgModel_34_5 = new import18.Wrapper_NgModel(this._ControlContainer_19_4, null, null, this._NG_VALUE_ACCESSOR_34_4);
+        this._NgControl_34_6 = this._NgModel_34_5.context;
+        this._NgControlStatus_34_7 = new import16.Wrapper_NgControlStatus(this._NgControl_34_6);
+        this._text_35 = this.renderer.createText(this._el_19, '\n        ', null);
+        this._el_36 = import3.createRenderElement(this.renderer, this._el_19, 'div', new import3.InlineArray2(2, 'class', 'form group'), null);
+        this._el_37 = import3.createRenderElement(this.renderer, this._el_36, 'input', new import3.InlineArray8(8, 'class', 'form-control', 'name', 'maxLon', 'placeholder', 'Max lon', 'type', 'text'), null);
+        this._DefaultValueAccessor_37_3 = new import17.Wrapper_DefaultValueAccessor(this.renderer, new import21.ElementRef(this._el_37));
+        this._NG_VALUE_ACCESSOR_37_4 = [this._DefaultValueAccessor_37_3.context];
+        this._NgModel_37_5 = new import18.Wrapper_NgModel(this._ControlContainer_19_4, null, null, this._NG_VALUE_ACCESSOR_37_4);
+        this._NgControl_37_6 = this._NgModel_37_5.context;
+        this._NgControlStatus_37_7 = new import16.Wrapper_NgControlStatus(this._NgControl_37_6);
+        this._text_38 = this.renderer.createText(this._el_19, '\n        ', null);
+        this._el_39 = import3.createRenderElement(this.renderer, this._el_19, 'button', new import3.InlineArray2(2, 'class', 'btn btn-default'), null);
+        this._text_40 = this.renderer.createText(this._el_39, 'CREATE EVENT', null);
+        this._text_41 = this.renderer.createText(this._el_19, '\n    ', null);
+        this._text_42 = this.renderer.createText(this._el_0, '\n    ', null);
+        this._text_43 = this.renderer.createText(this._el_0, '\n', null);
+        var disposable_0 = import3.subscribeToRenderElement(this, this._el_8, new import3.InlineArray4(4, 'submit', null, 'reset', null), this.eventHandler(this.handleEvent_8));
+        var disposable_1 = import3.subscribeToRenderElement(this, this._el_10, new import3.InlineArray2(2, 'change', null), this.eventHandler(this.handleEvent_10));
+        var disposable_2 = import3.subscribeToRenderElement(this, this._el_15, new import3.InlineArray2(2, 'click', null), this.eventHandler(this.handleEvent_15));
+        var disposable_3 = import3.subscribeToRenderElement(this, this._el_19, new import3.InlineArray4(4, 'submit', null, 'reset', null), this.eventHandler(this.handleEvent_19));
+        var disposable_4 = import3.subscribeToRenderElement(this, this._el_22, new import3.InlineArray8(6, 'ngModelChange', null, 'input', null, 'blur', null), this.eventHandler(this.handleEvent_22));
+        this._NgModel_22_5.subscribe(this, this.eventHandler(this.handleEvent_22), true);
+        var disposable_5 = import3.subscribeToRenderElement(this, this._el_25, new import3.InlineArray8(6, 'ngModelChange', null, 'input', null, 'blur', null), this.eventHandler(this.handleEvent_25));
+        this._NgModel_25_5.subscribe(this, this.eventHandler(this.handleEvent_25), true);
+        var disposable_6 = import3.subscribeToRenderElement(this, this._el_28, new import3.InlineArray8(6, 'ngModelChange', null, 'input', null, 'blur', null), this.eventHandler(this.handleEvent_28));
+        this._NgModel_28_5.subscribe(this, this.eventHandler(this.handleEvent_28), true);
+        var disposable_7 = import3.subscribeToRenderElement(this, this._el_31, new import3.InlineArray8(6, 'ngModelChange', null, 'input', null, 'blur', null), this.eventHandler(this.handleEvent_31));
+        this._NgModel_31_5.subscribe(this, this.eventHandler(this.handleEvent_31), true);
+        var disposable_8 = import3.subscribeToRenderElement(this, this._el_34, new import3.InlineArray8(6, 'ngModelChange', null, 'input', null, 'blur', null), this.eventHandler(this.handleEvent_34));
+        this._NgModel_34_5.subscribe(this, this.eventHandler(this.handleEvent_34), true);
+        var disposable_9 = import3.subscribeToRenderElement(this, this._el_37, new import3.InlineArray8(6, 'ngModelChange', null, 'input', null, 'blur', null), this.eventHandler(this.handleEvent_37));
+        this._NgModel_37_5.subscribe(this, this.eventHandler(this.handleEvent_37), true);
+        var disposable_10 = import3.subscribeToRenderElement(this, this._el_39, new import3.InlineArray2(2, 'click', null), this.eventHandler(this.handleEvent_39));
         this.init(null, (this.renderer.directRenderer ? null : [
             this._el_0,
             this._text_1,
-            this._el_2,
-            this._text_3,
-            this._anchor_4,
-            this._text_5,
+            this._text_2,
+            this._el_3,
+            this._text_4,
+            this._anchor_5,
             this._text_6,
-            this._el_7,
-            this._text_8,
-            this._el_9,
-            this._text_10,
-            this._el_11,
-            this._text_12,
+            this._text_7,
+            this._el_8,
+            this._text_9,
+            this._el_10,
+            this._text_11,
+            this._el_12,
             this._text_13,
-            this._el_14,
-            this._text_15,
+            this._text_14,
+            this._el_15,
             this._text_16,
             this._text_17,
-            this._el_18,
-            this._text_19,
-            this._el_20,
+            this._text_18,
+            this._el_19,
+            this._text_20,
             this._el_21,
-            this._text_22,
-            this._el_23,
+            this._el_22,
+            this._text_23,
             this._el_24,
-            this._text_25,
-            this._el_26,
+            this._el_25,
+            this._text_26,
             this._el_27,
-            this._text_28,
-            this._el_29,
+            this._el_28,
+            this._text_29,
             this._el_30,
-            this._text_31,
-            this._el_32,
+            this._el_31,
+            this._text_32,
             this._el_33,
-            this._text_34,
-            this._el_35,
+            this._el_34,
+            this._text_35,
             this._el_36,
-            this._text_37,
-            this._el_38,
-            this._text_39,
+            this._el_37,
+            this._text_38,
+            this._el_39,
             this._text_40,
             this._text_41,
-            this._text_42
+            this._text_42,
+            this._text_43
         ]), [
             disposable_0,
             disposable_1,
@@ -356,211 +357,211 @@ var View_EventComponent0 = (function (_super) {
         return null;
     };
     View_EventComponent0.prototype.injectorGetInternal = function (token, requestNodeIndex, notFoundResult) {
-        if (((token === import20.TemplateRef) && (4 === requestNodeIndex))) {
-            return this._TemplateRef_4_5;
+        if (((token === import19.TemplateRef) && (5 === requestNodeIndex))) {
+            return this._TemplateRef_5_5;
         }
-        if (((token === import23.NgFor) && (4 === requestNodeIndex))) {
-            return this._NgFor_4_6.context;
+        if (((token === import22.NgFor) && (5 === requestNodeIndex))) {
+            return this._NgFor_5_6.context;
         }
-        if (((token === import24.NgForm) && ((7 <= requestNodeIndex) && (requestNodeIndex <= 16)))) {
-            return this._NgForm_7_3.context;
+        if (((token === import23.NgForm) && ((8 <= requestNodeIndex) && (requestNodeIndex <= 17)))) {
+            return this._NgForm_8_3.context;
         }
-        if (((token === import25.ControlContainer) && ((7 <= requestNodeIndex) && (requestNodeIndex <= 16)))) {
-            return this._ControlContainer_7_4;
+        if (((token === import24.ControlContainer) && ((8 <= requestNodeIndex) && (requestNodeIndex <= 17)))) {
+            return this._ControlContainer_8_4;
         }
-        if (((token === import26.NgControlStatusGroup) && ((7 <= requestNodeIndex) && (requestNodeIndex <= 16)))) {
-            return this._NgControlStatusGroup_7_5.context;
+        if (((token === import25.NgControlStatusGroup) && ((8 <= requestNodeIndex) && (requestNodeIndex <= 17)))) {
+            return this._NgControlStatusGroup_8_5.context;
         }
-        if (((token === import27.DefaultValueAccessor) && (21 === requestNodeIndex))) {
-            return this._DefaultValueAccessor_21_3.context;
+        if (((token === import26.DefaultValueAccessor) && (22 === requestNodeIndex))) {
+            return this._DefaultValueAccessor_22_3.context;
         }
-        if (((token === import28.NG_VALUE_ACCESSOR) && (21 === requestNodeIndex))) {
-            return this._NG_VALUE_ACCESSOR_21_4;
+        if (((token === import27.NG_VALUE_ACCESSOR) && (22 === requestNodeIndex))) {
+            return this._NG_VALUE_ACCESSOR_22_4;
         }
-        if (((token === import29.NgModel) && (21 === requestNodeIndex))) {
-            return this._NgModel_21_5.context;
+        if (((token === import28.NgModel) && (22 === requestNodeIndex))) {
+            return this._NgModel_22_5.context;
         }
-        if (((token === import30.NgControl) && (21 === requestNodeIndex))) {
-            return this._NgControl_21_6;
+        if (((token === import29.NgControl) && (22 === requestNodeIndex))) {
+            return this._NgControl_22_6;
         }
-        if (((token === import26.NgControlStatus) && (21 === requestNodeIndex))) {
-            return this._NgControlStatus_21_7.context;
+        if (((token === import25.NgControlStatus) && (22 === requestNodeIndex))) {
+            return this._NgControlStatus_22_7.context;
         }
-        if (((token === import27.DefaultValueAccessor) && (24 === requestNodeIndex))) {
-            return this._DefaultValueAccessor_24_3.context;
+        if (((token === import26.DefaultValueAccessor) && (25 === requestNodeIndex))) {
+            return this._DefaultValueAccessor_25_3.context;
         }
-        if (((token === import28.NG_VALUE_ACCESSOR) && (24 === requestNodeIndex))) {
-            return this._NG_VALUE_ACCESSOR_24_4;
+        if (((token === import27.NG_VALUE_ACCESSOR) && (25 === requestNodeIndex))) {
+            return this._NG_VALUE_ACCESSOR_25_4;
         }
-        if (((token === import29.NgModel) && (24 === requestNodeIndex))) {
-            return this._NgModel_24_5.context;
+        if (((token === import28.NgModel) && (25 === requestNodeIndex))) {
+            return this._NgModel_25_5.context;
         }
-        if (((token === import30.NgControl) && (24 === requestNodeIndex))) {
-            return this._NgControl_24_6;
+        if (((token === import29.NgControl) && (25 === requestNodeIndex))) {
+            return this._NgControl_25_6;
         }
-        if (((token === import26.NgControlStatus) && (24 === requestNodeIndex))) {
-            return this._NgControlStatus_24_7.context;
+        if (((token === import25.NgControlStatus) && (25 === requestNodeIndex))) {
+            return this._NgControlStatus_25_7.context;
         }
-        if (((token === import27.DefaultValueAccessor) && (27 === requestNodeIndex))) {
-            return this._DefaultValueAccessor_27_3.context;
+        if (((token === import26.DefaultValueAccessor) && (28 === requestNodeIndex))) {
+            return this._DefaultValueAccessor_28_3.context;
         }
-        if (((token === import28.NG_VALUE_ACCESSOR) && (27 === requestNodeIndex))) {
-            return this._NG_VALUE_ACCESSOR_27_4;
+        if (((token === import27.NG_VALUE_ACCESSOR) && (28 === requestNodeIndex))) {
+            return this._NG_VALUE_ACCESSOR_28_4;
         }
-        if (((token === import29.NgModel) && (27 === requestNodeIndex))) {
-            return this._NgModel_27_5.context;
+        if (((token === import28.NgModel) && (28 === requestNodeIndex))) {
+            return this._NgModel_28_5.context;
         }
-        if (((token === import30.NgControl) && (27 === requestNodeIndex))) {
-            return this._NgControl_27_6;
+        if (((token === import29.NgControl) && (28 === requestNodeIndex))) {
+            return this._NgControl_28_6;
         }
-        if (((token === import26.NgControlStatus) && (27 === requestNodeIndex))) {
-            return this._NgControlStatus_27_7.context;
+        if (((token === import25.NgControlStatus) && (28 === requestNodeIndex))) {
+            return this._NgControlStatus_28_7.context;
         }
-        if (((token === import27.DefaultValueAccessor) && (30 === requestNodeIndex))) {
-            return this._DefaultValueAccessor_30_3.context;
+        if (((token === import26.DefaultValueAccessor) && (31 === requestNodeIndex))) {
+            return this._DefaultValueAccessor_31_3.context;
         }
-        if (((token === import28.NG_VALUE_ACCESSOR) && (30 === requestNodeIndex))) {
-            return this._NG_VALUE_ACCESSOR_30_4;
+        if (((token === import27.NG_VALUE_ACCESSOR) && (31 === requestNodeIndex))) {
+            return this._NG_VALUE_ACCESSOR_31_4;
         }
-        if (((token === import29.NgModel) && (30 === requestNodeIndex))) {
-            return this._NgModel_30_5.context;
+        if (((token === import28.NgModel) && (31 === requestNodeIndex))) {
+            return this._NgModel_31_5.context;
         }
-        if (((token === import30.NgControl) && (30 === requestNodeIndex))) {
-            return this._NgControl_30_6;
+        if (((token === import29.NgControl) && (31 === requestNodeIndex))) {
+            return this._NgControl_31_6;
         }
-        if (((token === import26.NgControlStatus) && (30 === requestNodeIndex))) {
-            return this._NgControlStatus_30_7.context;
+        if (((token === import25.NgControlStatus) && (31 === requestNodeIndex))) {
+            return this._NgControlStatus_31_7.context;
         }
-        if (((token === import27.DefaultValueAccessor) && (33 === requestNodeIndex))) {
-            return this._DefaultValueAccessor_33_3.context;
+        if (((token === import26.DefaultValueAccessor) && (34 === requestNodeIndex))) {
+            return this._DefaultValueAccessor_34_3.context;
         }
-        if (((token === import28.NG_VALUE_ACCESSOR) && (33 === requestNodeIndex))) {
-            return this._NG_VALUE_ACCESSOR_33_4;
+        if (((token === import27.NG_VALUE_ACCESSOR) && (34 === requestNodeIndex))) {
+            return this._NG_VALUE_ACCESSOR_34_4;
         }
-        if (((token === import29.NgModel) && (33 === requestNodeIndex))) {
-            return this._NgModel_33_5.context;
+        if (((token === import28.NgModel) && (34 === requestNodeIndex))) {
+            return this._NgModel_34_5.context;
         }
-        if (((token === import30.NgControl) && (33 === requestNodeIndex))) {
-            return this._NgControl_33_6;
+        if (((token === import29.NgControl) && (34 === requestNodeIndex))) {
+            return this._NgControl_34_6;
         }
-        if (((token === import26.NgControlStatus) && (33 === requestNodeIndex))) {
-            return this._NgControlStatus_33_7.context;
+        if (((token === import25.NgControlStatus) && (34 === requestNodeIndex))) {
+            return this._NgControlStatus_34_7.context;
         }
-        if (((token === import27.DefaultValueAccessor) && (36 === requestNodeIndex))) {
-            return this._DefaultValueAccessor_36_3.context;
+        if (((token === import26.DefaultValueAccessor) && (37 === requestNodeIndex))) {
+            return this._DefaultValueAccessor_37_3.context;
         }
-        if (((token === import28.NG_VALUE_ACCESSOR) && (36 === requestNodeIndex))) {
-            return this._NG_VALUE_ACCESSOR_36_4;
+        if (((token === import27.NG_VALUE_ACCESSOR) && (37 === requestNodeIndex))) {
+            return this._NG_VALUE_ACCESSOR_37_4;
         }
-        if (((token === import29.NgModel) && (36 === requestNodeIndex))) {
-            return this._NgModel_36_5.context;
+        if (((token === import28.NgModel) && (37 === requestNodeIndex))) {
+            return this._NgModel_37_5.context;
         }
-        if (((token === import30.NgControl) && (36 === requestNodeIndex))) {
-            return this._NgControl_36_6;
+        if (((token === import29.NgControl) && (37 === requestNodeIndex))) {
+            return this._NgControl_37_6;
         }
-        if (((token === import26.NgControlStatus) && (36 === requestNodeIndex))) {
-            return this._NgControlStatus_36_7.context;
+        if (((token === import25.NgControlStatus) && (37 === requestNodeIndex))) {
+            return this._NgControlStatus_37_7.context;
         }
-        if (((token === import24.NgForm) && ((18 <= requestNodeIndex) && (requestNodeIndex <= 40)))) {
-            return this._NgForm_18_3.context;
+        if (((token === import23.NgForm) && ((19 <= requestNodeIndex) && (requestNodeIndex <= 41)))) {
+            return this._NgForm_19_3.context;
         }
-        if (((token === import25.ControlContainer) && ((18 <= requestNodeIndex) && (requestNodeIndex <= 40)))) {
-            return this._ControlContainer_18_4;
+        if (((token === import24.ControlContainer) && ((19 <= requestNodeIndex) && (requestNodeIndex <= 41)))) {
+            return this._ControlContainer_19_4;
         }
-        if (((token === import26.NgControlStatusGroup) && ((18 <= requestNodeIndex) && (requestNodeIndex <= 40)))) {
-            return this._NgControlStatusGroup_18_5.context;
+        if (((token === import25.NgControlStatusGroup) && ((19 <= requestNodeIndex) && (requestNodeIndex <= 41)))) {
+            return this._NgControlStatusGroup_19_5.context;
         }
         return notFoundResult;
     };
     View_EventComponent0.prototype.detectChangesInternal = function (throwOnChange) {
-        var currVal_4_0_0 = this.context.events;
-        this._NgFor_4_6.check_ngForOf(currVal_4_0_0, throwOnChange, false);
-        this._NgFor_4_6.ngDoCheck(this, this._anchor_4, throwOnChange);
-        this._NgForm_7_3.ngDoCheck(this, this._el_7, throwOnChange);
-        this._NgControlStatusGroup_7_5.ngDoCheck(this, this._el_7, throwOnChange);
-        this._NgForm_18_3.ngDoCheck(this, this._el_18, throwOnChange);
-        this._NgControlStatusGroup_18_5.ngDoCheck(this, this._el_18, throwOnChange);
-        this._DefaultValueAccessor_21_3.ngDoCheck(this, this._el_21, throwOnChange);
-        var currVal_21_1_0 = 'name';
-        this._NgModel_21_5.check_name(currVal_21_1_0, throwOnChange, false);
-        var currVal_21_1_1 = this.context.eventName;
-        this._NgModel_21_5.check_model(currVal_21_1_1, throwOnChange, false);
-        this._NgModel_21_5.ngDoCheck(this, this._el_21, throwOnChange);
-        this._NgControlStatus_21_7.ngDoCheck(this, this._el_21, throwOnChange);
-        this._DefaultValueAccessor_24_3.ngDoCheck(this, this._el_24, throwOnChange);
-        var currVal_24_1_0 = 'description';
-        this._NgModel_24_5.check_name(currVal_24_1_0, throwOnChange, false);
-        var currVal_24_1_1 = this.context.description;
-        this._NgModel_24_5.check_model(currVal_24_1_1, throwOnChange, false);
-        this._NgModel_24_5.ngDoCheck(this, this._el_24, throwOnChange);
-        this._NgControlStatus_24_7.ngDoCheck(this, this._el_24, throwOnChange);
-        this._DefaultValueAccessor_27_3.ngDoCheck(this, this._el_27, throwOnChange);
-        var currVal_27_1_0 = 'minLat';
-        this._NgModel_27_5.check_name(currVal_27_1_0, throwOnChange, false);
-        var currVal_27_1_1 = this.context.minLat;
-        this._NgModel_27_5.check_model(currVal_27_1_1, throwOnChange, false);
-        this._NgModel_27_5.ngDoCheck(this, this._el_27, throwOnChange);
-        this._NgControlStatus_27_7.ngDoCheck(this, this._el_27, throwOnChange);
-        this._DefaultValueAccessor_30_3.ngDoCheck(this, this._el_30, throwOnChange);
-        var currVal_30_1_0 = 'minLon';
-        this._NgModel_30_5.check_name(currVal_30_1_0, throwOnChange, false);
-        var currVal_30_1_1 = this.context.minLon;
-        this._NgModel_30_5.check_model(currVal_30_1_1, throwOnChange, false);
-        this._NgModel_30_5.ngDoCheck(this, this._el_30, throwOnChange);
-        this._NgControlStatus_30_7.ngDoCheck(this, this._el_30, throwOnChange);
-        this._DefaultValueAccessor_33_3.ngDoCheck(this, this._el_33, throwOnChange);
-        var currVal_33_1_0 = 'maxLat';
-        this._NgModel_33_5.check_name(currVal_33_1_0, throwOnChange, false);
-        var currVal_33_1_1 = this.context.maxLat;
-        this._NgModel_33_5.check_model(currVal_33_1_1, throwOnChange, false);
-        this._NgModel_33_5.ngDoCheck(this, this._el_33, throwOnChange);
-        this._NgControlStatus_33_7.ngDoCheck(this, this._el_33, throwOnChange);
-        this._DefaultValueAccessor_36_3.ngDoCheck(this, this._el_36, throwOnChange);
-        var currVal_36_1_0 = 'maxLon';
-        this._NgModel_36_5.check_name(currVal_36_1_0, throwOnChange, false);
-        var currVal_36_1_1 = this.context.maxLon;
-        this._NgModel_36_5.check_model(currVal_36_1_1, throwOnChange, false);
-        this._NgModel_36_5.ngDoCheck(this, this._el_36, throwOnChange);
-        this._NgControlStatus_36_7.ngDoCheck(this, this._el_36, throwOnChange);
-        this._vc_4.detectChangesInNestedViews(throwOnChange);
-        this._NgControlStatusGroup_7_5.checkHost(this, this, this._el_7, throwOnChange);
-        this._NgControlStatusGroup_18_5.checkHost(this, this, this._el_18, throwOnChange);
-        this._NgControlStatus_21_7.checkHost(this, this, this._el_21, throwOnChange);
-        this._NgControlStatus_24_7.checkHost(this, this, this._el_24, throwOnChange);
-        this._NgControlStatus_27_7.checkHost(this, this, this._el_27, throwOnChange);
-        this._NgControlStatus_30_7.checkHost(this, this, this._el_30, throwOnChange);
-        this._NgControlStatus_33_7.checkHost(this, this, this._el_33, throwOnChange);
-        this._NgControlStatus_36_7.checkHost(this, this, this._el_36, throwOnChange);
-        var currVal_82 = this.context.createEventButtonState();
-        if (import3.checkBinding(throwOnChange, this._expr_82, currVal_82)) {
-            this.renderer.setElementProperty(this._el_38, 'disabled', currVal_82);
-            this._expr_82 = currVal_82;
+        var currVal_5_0_0 = this.context.events;
+        this._NgFor_5_6.check_ngForOf(currVal_5_0_0, throwOnChange, false);
+        this._NgFor_5_6.ngDoCheck(this, this._anchor_5, throwOnChange);
+        this._NgForm_8_3.ngDoCheck(this, this._el_8, throwOnChange);
+        this._NgControlStatusGroup_8_5.ngDoCheck(this, this._el_8, throwOnChange);
+        this._NgForm_19_3.ngDoCheck(this, this._el_19, throwOnChange);
+        this._NgControlStatusGroup_19_5.ngDoCheck(this, this._el_19, throwOnChange);
+        this._DefaultValueAccessor_22_3.ngDoCheck(this, this._el_22, throwOnChange);
+        var currVal_22_1_0 = 'name';
+        this._NgModel_22_5.check_name(currVal_22_1_0, throwOnChange, false);
+        var currVal_22_1_1 = this.context.eventName;
+        this._NgModel_22_5.check_model(currVal_22_1_1, throwOnChange, false);
+        this._NgModel_22_5.ngDoCheck(this, this._el_22, throwOnChange);
+        this._NgControlStatus_22_7.ngDoCheck(this, this._el_22, throwOnChange);
+        this._DefaultValueAccessor_25_3.ngDoCheck(this, this._el_25, throwOnChange);
+        var currVal_25_1_0 = 'description';
+        this._NgModel_25_5.check_name(currVal_25_1_0, throwOnChange, false);
+        var currVal_25_1_1 = this.context.description;
+        this._NgModel_25_5.check_model(currVal_25_1_1, throwOnChange, false);
+        this._NgModel_25_5.ngDoCheck(this, this._el_25, throwOnChange);
+        this._NgControlStatus_25_7.ngDoCheck(this, this._el_25, throwOnChange);
+        this._DefaultValueAccessor_28_3.ngDoCheck(this, this._el_28, throwOnChange);
+        var currVal_28_1_0 = 'minLat';
+        this._NgModel_28_5.check_name(currVal_28_1_0, throwOnChange, false);
+        var currVal_28_1_1 = this.context.minLat;
+        this._NgModel_28_5.check_model(currVal_28_1_1, throwOnChange, false);
+        this._NgModel_28_5.ngDoCheck(this, this._el_28, throwOnChange);
+        this._NgControlStatus_28_7.ngDoCheck(this, this._el_28, throwOnChange);
+        this._DefaultValueAccessor_31_3.ngDoCheck(this, this._el_31, throwOnChange);
+        var currVal_31_1_0 = 'minLon';
+        this._NgModel_31_5.check_name(currVal_31_1_0, throwOnChange, false);
+        var currVal_31_1_1 = this.context.minLon;
+        this._NgModel_31_5.check_model(currVal_31_1_1, throwOnChange, false);
+        this._NgModel_31_5.ngDoCheck(this, this._el_31, throwOnChange);
+        this._NgControlStatus_31_7.ngDoCheck(this, this._el_31, throwOnChange);
+        this._DefaultValueAccessor_34_3.ngDoCheck(this, this._el_34, throwOnChange);
+        var currVal_34_1_0 = 'maxLat';
+        this._NgModel_34_5.check_name(currVal_34_1_0, throwOnChange, false);
+        var currVal_34_1_1 = this.context.maxLat;
+        this._NgModel_34_5.check_model(currVal_34_1_1, throwOnChange, false);
+        this._NgModel_34_5.ngDoCheck(this, this._el_34, throwOnChange);
+        this._NgControlStatus_34_7.ngDoCheck(this, this._el_34, throwOnChange);
+        this._DefaultValueAccessor_37_3.ngDoCheck(this, this._el_37, throwOnChange);
+        var currVal_37_1_0 = 'maxLon';
+        this._NgModel_37_5.check_name(currVal_37_1_0, throwOnChange, false);
+        var currVal_37_1_1 = this.context.maxLon;
+        this._NgModel_37_5.check_model(currVal_37_1_1, throwOnChange, false);
+        this._NgModel_37_5.ngDoCheck(this, this._el_37, throwOnChange);
+        this._NgControlStatus_37_7.ngDoCheck(this, this._el_37, throwOnChange);
+        this._vc_5.detectChangesInNestedViews(throwOnChange);
+        this._NgControlStatusGroup_8_5.checkHost(this, this, this._el_8, throwOnChange);
+        this._NgControlStatusGroup_19_5.checkHost(this, this, this._el_19, throwOnChange);
+        this._NgControlStatus_22_7.checkHost(this, this, this._el_22, throwOnChange);
+        this._NgControlStatus_25_7.checkHost(this, this, this._el_25, throwOnChange);
+        this._NgControlStatus_28_7.checkHost(this, this, this._el_28, throwOnChange);
+        this._NgControlStatus_31_7.checkHost(this, this, this._el_31, throwOnChange);
+        this._NgControlStatus_34_7.checkHost(this, this, this._el_34, throwOnChange);
+        this._NgControlStatus_37_7.checkHost(this, this, this._el_37, throwOnChange);
+        var currVal_83 = this.context.createEventButtonState();
+        if (import3.checkBinding(throwOnChange, this._expr_83, currVal_83)) {
+            this.renderer.setElementProperty(this._el_39, 'disabled', currVal_83);
+            this._expr_83 = currVal_83;
         }
     };
     View_EventComponent0.prototype.destroyInternal = function () {
-        this._vc_4.destroyNestedViews();
-        this._NgForm_7_3.ngOnDestroy();
-        this._NgModel_21_5.ngOnDestroy();
-        this._NgModel_24_5.ngOnDestroy();
-        this._NgModel_27_5.ngOnDestroy();
-        this._NgModel_30_5.ngOnDestroy();
-        this._NgModel_33_5.ngOnDestroy();
-        this._NgModel_36_5.ngOnDestroy();
-        this._NgForm_18_3.ngOnDestroy();
+        this._vc_5.destroyNestedViews();
+        this._NgForm_8_3.ngOnDestroy();
+        this._NgModel_22_5.ngOnDestroy();
+        this._NgModel_25_5.ngOnDestroy();
+        this._NgModel_28_5.ngOnDestroy();
+        this._NgModel_31_5.ngOnDestroy();
+        this._NgModel_34_5.ngOnDestroy();
+        this._NgModel_37_5.ngOnDestroy();
+        this._NgForm_19_3.ngOnDestroy();
     };
     View_EventComponent0.prototype.createEmbeddedViewInternal = function (nodeIndex) {
-        if ((nodeIndex == 4)) {
-            return new View_EventComponent1(this.viewUtils, this, 4, this._anchor_4, this._vc_4);
+        if ((nodeIndex == 5)) {
+            return new View_EventComponent1(this.viewUtils, this, 5, this._anchor_5, this._vc_5);
         }
         return null;
     };
-    View_EventComponent0.prototype.handleEvent_7 = function (eventName, $event) {
+    View_EventComponent0.prototype.handleEvent_8 = function (eventName, $event) {
         this.markPathToRootAsCheckOnce();
         var result = true;
-        result = (this._NgForm_7_3.handleEvent(eventName, $event) && result);
+        result = (this._NgForm_8_3.handleEvent(eventName, $event) && result);
         return result;
     };
-    View_EventComponent0.prototype.handleEvent_9 = function (eventName, $event) {
+    View_EventComponent0.prototype.handleEvent_10 = function (eventName, $event) {
         this.markPathToRootAsCheckOnce();
         var result = true;
         if ((eventName == 'change')) {
@@ -569,7 +570,7 @@ var View_EventComponent0 = (function (_super) {
         }
         return result;
     };
-    View_EventComponent0.prototype.handleEvent_14 = function (eventName, $event) {
+    View_EventComponent0.prototype.handleEvent_15 = function (eventName, $event) {
         this.markPathToRootAsCheckOnce();
         var result = true;
         if ((eventName == 'click')) {
@@ -578,73 +579,73 @@ var View_EventComponent0 = (function (_super) {
         }
         return result;
     };
-    View_EventComponent0.prototype.handleEvent_18 = function (eventName, $event) {
+    View_EventComponent0.prototype.handleEvent_19 = function (eventName, $event) {
         this.markPathToRootAsCheckOnce();
         var result = true;
-        result = (this._NgForm_18_3.handleEvent(eventName, $event) && result);
+        result = (this._NgForm_19_3.handleEvent(eventName, $event) && result);
         return result;
     };
-    View_EventComponent0.prototype.handleEvent_21 = function (eventName, $event) {
+    View_EventComponent0.prototype.handleEvent_22 = function (eventName, $event) {
         this.markPathToRootAsCheckOnce();
         var result = true;
-        result = (this._DefaultValueAccessor_21_3.handleEvent(eventName, $event) && result);
+        result = (this._DefaultValueAccessor_22_3.handleEvent(eventName, $event) && result);
         if ((eventName == 'ngModelChange')) {
             var pd_sub_0 = ((this.context.eventName = $event) !== false);
             result = (pd_sub_0 && result);
         }
         return result;
     };
-    View_EventComponent0.prototype.handleEvent_24 = function (eventName, $event) {
+    View_EventComponent0.prototype.handleEvent_25 = function (eventName, $event) {
         this.markPathToRootAsCheckOnce();
         var result = true;
-        result = (this._DefaultValueAccessor_24_3.handleEvent(eventName, $event) && result);
+        result = (this._DefaultValueAccessor_25_3.handleEvent(eventName, $event) && result);
         if ((eventName == 'ngModelChange')) {
             var pd_sub_0 = ((this.context.description = $event) !== false);
             result = (pd_sub_0 && result);
         }
         return result;
     };
-    View_EventComponent0.prototype.handleEvent_27 = function (eventName, $event) {
+    View_EventComponent0.prototype.handleEvent_28 = function (eventName, $event) {
         this.markPathToRootAsCheckOnce();
         var result = true;
-        result = (this._DefaultValueAccessor_27_3.handleEvent(eventName, $event) && result);
+        result = (this._DefaultValueAccessor_28_3.handleEvent(eventName, $event) && result);
         if ((eventName == 'ngModelChange')) {
             var pd_sub_0 = ((this.context.minLat = $event) !== false);
             result = (pd_sub_0 && result);
         }
         return result;
     };
-    View_EventComponent0.prototype.handleEvent_30 = function (eventName, $event) {
+    View_EventComponent0.prototype.handleEvent_31 = function (eventName, $event) {
         this.markPathToRootAsCheckOnce();
         var result = true;
-        result = (this._DefaultValueAccessor_30_3.handleEvent(eventName, $event) && result);
+        result = (this._DefaultValueAccessor_31_3.handleEvent(eventName, $event) && result);
         if ((eventName == 'ngModelChange')) {
             var pd_sub_0 = ((this.context.minLon = $event) !== false);
             result = (pd_sub_0 && result);
         }
         return result;
     };
-    View_EventComponent0.prototype.handleEvent_33 = function (eventName, $event) {
+    View_EventComponent0.prototype.handleEvent_34 = function (eventName, $event) {
         this.markPathToRootAsCheckOnce();
         var result = true;
-        result = (this._DefaultValueAccessor_33_3.handleEvent(eventName, $event) && result);
+        result = (this._DefaultValueAccessor_34_3.handleEvent(eventName, $event) && result);
         if ((eventName == 'ngModelChange')) {
             var pd_sub_0 = ((this.context.maxLat = $event) !== false);
             result = (pd_sub_0 && result);
         }
         return result;
     };
-    View_EventComponent0.prototype.handleEvent_36 = function (eventName, $event) {
+    View_EventComponent0.prototype.handleEvent_37 = function (eventName, $event) {
         this.markPathToRootAsCheckOnce();
         var result = true;
-        result = (this._DefaultValueAccessor_36_3.handleEvent(eventName, $event) && result);
+        result = (this._DefaultValueAccessor_37_3.handleEvent(eventName, $event) && result);
         if ((eventName == 'ngModelChange')) {
             var pd_sub_0 = ((this.context.maxLon = $event) !== false);
             result = (pd_sub_0 && result);
         }
         return result;
     };
-    View_EventComponent0.prototype.handleEvent_38 = function (eventName, $event) {
+    View_EventComponent0.prototype.handleEvent_39 = function (eventName, $event) {
         this.markPathToRootAsCheckOnce();
         var result = true;
         if ((eventName == 'click')) {

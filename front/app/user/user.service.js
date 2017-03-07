@@ -36,6 +36,7 @@ var UserService = (function () {
             console.log("post: no error");
             _this.router.navigate(['/event']);
         }, function (error) {
+            console.error(error);
         });
     };
     UserService.prototype.logout = function () {
