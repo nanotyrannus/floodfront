@@ -8,6 +8,7 @@ export class EventService {
     private _eventName: string
     private events: any
     public bounds: any
+    public mode: string
 
     constructor(private rest: RestService) {}
 

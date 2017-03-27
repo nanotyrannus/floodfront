@@ -6,7 +6,7 @@
     "port": 22,
     "secure": true,
     "protocol": "sftp",
-    "uploadOnSave": true,
+    "uploadOnSave": false,
     "passive": false,
     "debug": false,
     "privateKeyPath": "/home/ryan/.ssh/jasminum",
@@ -15,6 +15,8 @@
         "\\.vscode",
         "\\.git",
         "\\.DS_Store",
-        "\\node_modules"
+        "\\node_modules",
+        "\\aot",
+        ".*ts"
     ]
 }

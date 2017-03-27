@@ -17,6 +17,7 @@ import { EventComponent } from './event/event.component';
 import { PopupComponent } from './map/popup.component';
 import { MarkerMenuComponent } from './map/marker-menu.component';
 import { MarkerNoteComponent } from './map/marker-note.component';
+import { ModeComponent } from './mode/mode.component';
 import { RestService } from './shared/rest.service';
 import { CookieService } from './shared/cookie.service';
 import { NavigationService } from './shared/navigation.service';
@@ -44,6 +45,10 @@ AppModule = __decorate([
                 {
                     path: 'event',
                     component: EventComponent
+                },
+                {
+                    path: 'select',
+                    component: ModeComponent
                 }
             ], {
                 useHash: true
@@ -58,7 +63,8 @@ AppModule = __decorate([
             EventComponent,
             LoginComponent,
             PopupComponent,
-            MarkerNoteComponent
+            MarkerNoteComponent,
+            ModeComponent
         ],
         providers: [
             EnvironmentService,

@@ -16,7 +16,7 @@
             "args": ["update"]
         },
         {
-            "taskName": "test",
+            "taskName": "build",
             "args": ["run", "start"],
             "isBuildCommand": true
         }

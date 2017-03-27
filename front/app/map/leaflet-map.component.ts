@@ -123,17 +123,43 @@ export class LeafletMapComponent {
       "center": [0, 0],
       "doubleClickZoom": false
     })
+    var matthewTiles = ["https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161007aOblique/{z}/{x}/{y}.png"
+      , "https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161008aOblique/{z}/{x}/{y}.png"
+      , "https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161008bOblique/{z}/{x}/{y}.png"
+      , "https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161009aOblique/{z}/{x}/{y}.png"
+      , "https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161010aOblique/{z}/{x}/{y}.png"
+      , "https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161011_RGB/{z}/{x}/{y}.png"
+      , "https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161013_RGB/{z}/{x}/{y}.png"
+      , "https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161014_RGB/{z}/{x}/{y}.png"
+      , "https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161015_RGB/{z}/{x}/{y}.png"
+      , "https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161016_RGB/{z}/{x}/{y}.png"]
+    let matthewOptions = { tileSize: 256, minZoom: 1, maxZoom: 19, type: 'xyz' }
 
-    new L.tileLayer("https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161007aOblique/{z}/{x}/{y}.png", { tileSize: 256, minZoom: 1, maxZoom: 19, type: 'xyz', errorTileUrl: 'https://storms.ngs.noaa.gov/storms/matthew/images/clear.png' }).addTo(this.leafletMap).bringToFront();
-    new L.tileLayer("https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161008aOblique/{z}/{x}/{y}.png", { tileSize: 256, minZoom: 1, maxZoom: 19, type: 'xyz', errorTileUrl: 'https://storms.ngs.noaa.gov/storms/matthew/images/clear.png' }).addTo(this.leafletMap).bringToFront();
-    new L.tileLayer("https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161008bOblique/{z}/{x}/{y}.png", { tileSize: 256, minZoom: 1, maxZoom: 19, type: 'xyz', errorTileUrl: 'https://storms.ngs.noaa.gov/storms/matthew/images/clear.png' }).addTo(this.leafletMap).bringToFront();
-    new L.tileLayer("https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161009aOblique/{z}/{x}/{y}.png", { tileSize: 256, minZoom: 1, maxZoom: 19, type: 'xyz', errorTileUrl: 'https://storms.ngs.noaa.gov/storms/matthew/images/clear.png' }).addTo(this.leafletMap).bringToFront();
-    new L.tileLayer("https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161010aOblique/{z}/{x}/{y}.png", { tileSize: 256, minZoom: 1, maxZoom: 19, type: 'xyz', errorTileUrl: 'https://storms.ngs.noaa.gov/storms/matthew/images/clear.png' }).addTo(this.leafletMap).bringToFront();
-    new L.tileLayer("https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161011_RGB/{z}/{x}/{y}.png", { tileSize: 256, minZoom: 1, maxZoom: 19, type: 'xyz', errorTileUrl: 'https://storms.ngs.noaa.gov/storms/matthew/images/clear.png' }).addTo(this.leafletMap).bringToFront();
-    new L.tileLayer("https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161013_RGB/{z}/{x}/{y}.png", { tileSize: 256, minZoom: 1, maxZoom: 19, type: 'xyz', errorTileUrl: 'https://storms.ngs.noaa.gov/storms/matthew/images/clear.png' }).addTo(this.leafletMap).bringToFront();
-    new L.tileLayer("https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161014_RGB/{z}/{x}/{y}.png", { tileSize: 256, minZoom: 1, maxZoom: 19, type: 'xyz', errorTileUrl: 'https://storms.ngs.noaa.gov/storms/matthew/images/clear.png' }).addTo(this.leafletMap).bringToFront();
-    new L.tileLayer("https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161015_RGB/{z}/{x}/{y}.png", { tileSize: 256, minZoom: 1, maxZoom: 19, type: 'xyz', errorTileUrl: 'https://storms.ngs.noaa.gov/storms/matthew/images/clear.png' }).addTo(this.leafletMap).bringToFront();
-    new L.tileLayer("https://geodesy.noaa.gov/storm_archive/storms/tilesb/services/tileserver.php/20161016_RGB/{z}/{x}/{y}.png", { tileSize: 256, minZoom: 1, maxZoom: 19, type: 'xyz', errorTileUrl: 'https://storms.ngs.noaa.gov/storms/matthew/images/clear.png' }).addTo(this.leafletMap).bringToFront();
+    let matthewLayer = new L.layerGroup(
+      matthewTiles.map(tileString => {
+        return new L.tileLayer(tileString, matthewOptions)
+      })
+    ).eachLayer(layer => {
+      layer.bringToFront()
+    })
+
+    if (this.eventService.mode === "desktop") {
+      matthewLayer.addTo(this.leafletMap)
+      // L.control.layers(null, { "Matthew": matthewLayer }).addTo(this.leafletMap)
+      L.tileLayer('https://api.mapbox.com/styles/v1/nanotyrannus/cj0kywrdm001n2smyhddxb7wb/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}', {
+        // attribution: 'Map data &copy; OpenStreetMap contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 19,
+        id: 'your.mapbox.project.id',
+        accessToken: 'pk.eyJ1IjoibmFub3R5cmFubnVzIiwiYSI6ImNpcnJtMmNubDBpZTN0N25rZmMxaHg4ZHQifQ.vj7pif8Z4BVhbYs55s1tAw'
+      }).addTo(this.leafletMap)
+    } else {
+      L.tileLayer('https://api.mapbox.com/styles/v1/nanotyrannus/ciye7ibx9000l2sk6v4n5bx3n/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}', {
+        // attribution: 'Map data &copy; OpenStreetMap contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 19,
+        id: 'your.mapbox.project.id',
+        accessToken: 'pk.eyJ1IjoibmFub3R5cmFubnVzIiwiYSI6ImNpcnJtMmNubDBpZTN0N25rZmMxaHg4ZHQifQ.vj7pif8Z4BVhbYs55s1tAw'
+      }).addTo(this.leafletMap)
+    }
 
     // this.leafletMap.fitBounds(L.latLng(this.bounds[0][0][1], this.bounds[0][0][0]), L.latLng(this.bounds[0][2][1], this.bounds[0][2][0])) // Bottom left and top right corners of bbox
     // console.log("SouthWest",L.latLng(this.bounds[0][0][1], this.bounds[0][0][0])) 
@@ -194,12 +220,7 @@ export class LeafletMapComponent {
       // marker.addTo(this.leafletMap)
     })
 
-    L.tileLayer('https://api.mapbox.com/styles/v1/nanotyrannus/ciye7ibx9000l2sk6v4n5bx3n/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}', {
-      // attribution: 'Map data &copy; OpenStreetMap contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-      maxZoom: 19,
-      id: 'your.mapbox.project.id',
-      accessToken: 'pk.eyJ1IjoibmFub3R5cmFubnVzIiwiYSI6ImNpcnJtMmNubDBpZTN0N25rZmMxaHg4ZHQifQ.vj7pif8Z4BVhbYs55s1tAw'
-    }).addTo(this.leafletMap)
+
 
     this.getMarkers()
   }

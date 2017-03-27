@@ -29,7 +29,8 @@ export class UserService {
                 this.cookieService.set("email", email)
                 console.log(data)
                 console.log("post: no error")
-                this.router.navigate(['/event'])
+                this.router.navigate(['/select'])
+                // this.router.navigate(['/event'])
             },
             error => {
                 console.error(error)

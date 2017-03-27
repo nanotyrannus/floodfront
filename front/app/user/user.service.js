@@ -34,7 +34,8 @@ var UserService = (function () {
             _this.cookieService.set("email", email);
             console.log(data);
             console.log("post: no error");
-            _this.router.navigate(['/event']);
+            _this.router.navigate(['/select']);
+            // this.router.navigate(['/event'])
         }, function (error) {
             console.error(error);
         });
